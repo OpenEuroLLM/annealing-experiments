@@ -1,4 +1,6 @@
 0.000395 flag/finepdfs-1.0.0/megatron-lm/gle_Latn/shard_0000_text_document
+0.000103 flag/finepdfs-1.0.0/megatron-lm/mlt_Latn/shard_0000_text_document
+0.000162 flag/finepdfs-1.0.0/megatron-lm/nno_Latn/shard_0000_text_document
 0.000444 flag/finepdfs-edu-1.0.0/megatron-lm/als_Latn/shard_0000_text_document
 0.000478 flag/finepdfs-edu-1.0.0/megatron-lm/bos_Latn/shard_0000_text_document
 0.000630 flag/finepdfs-edu-1.0.0/megatron-lm/bul_Cyrl/shard_0000_text_document
@@ -19,9 +21,9 @@
 0.000490 flag/finepdfs-edu-1.0.0/megatron-lm/lit_Latn/shard_0000_text_document
 0.000438 flag/finepdfs-edu-1.0.0/megatron-lm/lvs_Latn/shard_0000_text_document
 0.000459 flag/finepdfs-edu-1.0.0/megatron-lm/mkd_Cyrl/shard_0000_text_document
-0.000488 flag/finepdfs-edu-1.0.0/megatron-lm/mlt_Latn/shard_0000_text_document
+0.000385 flag/finepdfs-edu-1.0.0/megatron-lm/mlt_Latn/shard_0000_text_document
 0.000972 flag/finepdfs-edu-1.0.0/megatron-lm/nld_Latn/shard_0000_text_document
-0.000326 flag/finepdfs-edu-1.0.0/megatron-lm/nno_Latn/shard_0000_text_document
+0.000165 flag/finepdfs-edu-1.0.0/megatron-lm/nno_Latn/shard_0000_text_document
 0.000448 flag/finepdfs-edu-1.0.0/megatron-lm/nob_Latn/shard_0000_text_document
 0.001067 flag/finepdfs-edu-1.0.0/megatron-lm/pol_Latn/shard_0000_text_document
 0.001854 flag/finepdfs-edu-1.0.0/megatron-lm/por_Latn/shard_0000_text_document
