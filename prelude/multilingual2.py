@@ -5,7 +5,7 @@
 #
 # compute data mix ratios according to various constraints
 #
-# ./multilingual2.py --horizon 2e12 --scale 0.2 \
+# ./multilingual2.py --horizon 2e12 --scale 0.18 \
 #   --languages languages.txt --repeat 2 \
 #   --limit web:0.5 --limit mt:0.3 --limit pdf:0.15 --limit parallel:0.05 \
 #   --fill web --fill pdf --step 1e6 flag.csv > multilingual2.txt
