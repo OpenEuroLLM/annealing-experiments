@@ -201,6 +201,9 @@ def main():
                           languages[key]["n"], languages[key]["budget"],
                           _["ratio"]));
   else:
+    #
+    # sort lexicographically on dataset (and part) names
+    #
     for _ in sorted(chain(*pool.values()), key = itemgetter("collection", "set", "part")):
       ratio = _["n"] / horizon * arguments.scale;
       if ratio:
