@@ -2,10 +2,20 @@
 
 # -*- coding: utf-8; -*-
 
+#
+# compute data mix ratios according to various constraints
+#
+# ./multilingual2.py --horizon 2e12 --scale 0.2 \
+#   --languages languages.txt --repeat 2 \
+#   --limit web:0.5 --limit mt:0.3 --limit pdf:0.15 --limit parallel:0.05 \
+#   --fill web --fill pdf --step 1e6 flag.csv > multilingual2.txt
+#
 import argparse;
 import io;
+from itertools import chain;
 import json;
 import math;
+from operator import itemgetter;
 import os;
 import re;
 import sys;
@@ -27,11 +37,13 @@ def main():
   parser.add_argument("inputs", nargs = "+");
   arguments = parser.parse_args();
 
+  horizon = round(arguments.horizon * arguments.scale);
   limits = [];
   for _ in arguments.limit:
     fields = _.split(":");
-    limits.append((fields[0], min(float(fields[1]), 1.0),
-                   max(int(fields[2]) if len(fields) > 2 else arguments.repeat, 1)));
+    limits.append((fields[0],
+                   min(float(fields[1]), 1.0) if len(fields) > 1 else 1 / len(arguments.limits),
+                   max(int(fields[2]), 1) if len(fields) > 2 else arguments.repeat));
   languages, n = dict(), 0;
   with open(arguments.languages) as stream:
     for line in stream:
@@ -48,9 +60,9 @@ def main():
                         "codes": {_.strip() for _ in codes},
                         "budget": 0, "n": 0};
       n += len(codes);
-  print("multilingual2.py: {} codes for {} languages."
-        "".format(n, len(languages)),
-        file = sys.stderr, flush = True);
+  print("# multilingual2.py: {} codes for {} languages; horizon: {:,d} @ {:,.2f}."
+        "".format(n, len(languages), horizon, arguments.scale),
+        flush = True);
   
   pool, n = dict(), 0;
   total = {"all": 0, "tokens": 0, "wiki": 0, "parallel": 0, "pdf": 0, "web": 0, "mt": 0};
@@ -63,7 +75,8 @@ def main():
           if _ in file: collection = _;
         fields = line.strip().split(",");
         part = fields[1];
-        tokens = int(fields[7] if fields[7] else fields[4]);
+        if len(fields) > 12 and fields[12]: tokens = int(fields[12]);
+        else: tokens = int(fields[7] if fields[7] else fields[4]);
         total["all"] += tokens;
         for key, _ in languages.items():
           for code in _["codes"]:
@@ -90,25 +103,24 @@ def main():
     for _ in value:
       total["tokens"] += _["tokens"];
       if "type" in _: total[_["type"]] += _["tokens"];
-  print("multilingual2.py: {} dataset parts for {} languages in {} pool(s);"
+  print("# multilingual2.py: {} dataset parts for {} languages in {} pool(s);"
         "".format(n, len(pool), len(arguments.inputs)),
-        file = sys.stderr, flush = True);
+        flush = True);
   _ = total["tokens"];
-  print("multilingual2.py: {:,d} tokens (of {:,d});"
+  print("# multilingual2.py: {:,d} tokens (of {:,d});"
         "".format(_, total["all"]),
-        file = sys.stderr, flush = True);
-  print("multilingual2.py: {:,.1f}% wiki, {:,.1f}% parallel, "
+        flush = True);
+  print("# multilingual2.py: {:,.1f}% wiki, {:,.1f}% parallel, "
         "{:,.1f}% pdf, {:,.1f}% web, {:,.1f}% mt."
         "".format(total["wiki"] / _ * 100, total["parallel"] / _ * 100,
                   total["pdf"] / _ * 100, total["web"] / _ * 100, total["mt"] / _ * 100),
-        file = sys.stderr, flush = True);
-  print("multilingual2.py: limits:", end = "", file = sys.stderr, flush = True);
+        flush = True);
+  print("# multilingual2.py: limits:", end = "", flush = True);
   for i, (type, ratio, repeat) in enumerate(limits):
-    if i == 0: print(f" {type}:{ratio}:{repeat}", end = "", file = sys.stderr, flush = True);
-    else: print(f", {type}:{ratio}:{repeat}", end = "", file = sys.stderr, flush = True);
-  print(".", file = sys.stderr, flush = True);
+    if i == 0: print(f" {type}:{ratio}:{repeat}", end = "", flush = True);
+    else: print(f", {type}:{ratio}:{repeat}", end = "", flush = True);
+  print(".", flush = True);
     
-  horizon = round(arguments.horizon * arguments.scale);
   allocation = 0;
   #
   # a first round of equitable allocations, within .limits. and .repeat. constraints
@@ -122,7 +134,7 @@ def main():
       #
       # per-type limit for the current language, up to a set ratio and repeat count
       #
-      limit = min(round(budget * ratio * repeat), horizon - allocation);
+      limit = min(round(horizon / len(pool) * ratio), horizon - allocation);
       for _ in pool[language]:
         if "type" not in _ or _["type"] != type: continue;
         n = min(_["tokens"] * repeat, budget, limit);
@@ -131,9 +143,9 @@ def main():
         allocation += n;
         languages[language]["n"] += n;
         if arguments.debug:
-          print("{}/{}: {:,d} tokens of {:,d} ({:,.2f}%); {}: {:,d} [{:,d} of {:,d}]"
+          print("{}/{}: {:,d} tokens of {:,d} ({:,.2f}%) {{{:,d} of {:,d}}}; {}: {:,d} [{:,d} of {:,d}]"
                 "".format(_["set"], _["part"], n, _["tokens"], n / _["tokens"] * 100,
-                          language, languages[language]["n"], allocation, horizon),
+                          limit, budget, language, languages[language]["n"], allocation, horizon),
                 file = sys.stderr, flush = True);
         budget -= n;
         limit -= n;
@@ -146,7 +158,13 @@ def main():
   for _ in arguments.fill:
     fields = _.split(":");
     limits.append((fields[0],
-                   int(fields[1]) if len(fields) > 1 else arguments.repeat));
+                   max(int(fields[1]), 1) if len(fields) > 1 else arguments.repeat));
+  print("# multilingual2.py: fills:", end = "", flush = True);
+  for i, (type, repeat) in enumerate(limits):
+    if i == 0: print(f" {type}:{repeat}", end = "", flush = True);
+    else: print(f", {type}:{repeat}", end = "", flush = True);
+  print(".", flush = True);
+    
   if len(limits) == 0: empty = True;
   else: empty = False;
   while not empty and horizon > allocation:
@@ -155,6 +173,11 @@ def main():
       for language in languages.keys():
         for _ in pool[language]:
           if "type" not in _ or _["type"] != type or "empty" in _: continue;
+          #
+          # shun lower-quality sources for types that (in principle) offer a choice
+          #
+          if type == "web" and "noisy/" in _["part"]: continue;
+          if type == "pdf" and "-edu" not in _["set"]: continue;
           n = min(_["tokens"] * repeat - _["n"], arguments.step, horizon - allocation);
           _["n"] += n;
           if n == _["tokens"] * repeat: _["empty"] = True;
@@ -167,22 +190,25 @@ def main():
                             language, languages[language]["n"], allocation, horizon),
                   file = sys.stderr, flush = True);
 
-  for key, value in pool.items():
-    for _ in value:
-      ratio = _["n"] / horizon * arguments.scale;
-      if ratio:
-        if arguments.debug:
+  if arguments.debug:
+    for key, value in pool.items():
+      for _ in value:
+        ratio = _["n"] / horizon * arguments.scale;
+        if ratio:
           print("{}/{}: {:,d} tokens ({:,.2f}%) [{:,d} of {:,d}]; {:,.6f}."
                 "".format(_["set"], _["part"],
                           _["n"], _["n"] / _["tokens"] * 100,
                           languages[key]["n"], languages[key]["budget"],
                           _["ratio"]));
-        else:
-          print("{:,.6f} {}/{}/megatron-lm/{}"
-                "".format(ratio, _["collection"], _["set"], _["part"]));
-  print("multilingual2.py: allocated {:,d} tokens of {:,d} ({:,.2f}%)."
+  else:
+    for _ in sorted(chain(*pool.values()), key = itemgetter("collection", "set", "part")):
+      ratio = _["n"] / horizon * arguments.scale;
+      if ratio:
+        print("{:,.6f} {}/{}/megatron-lm/{}"
+              "".format(ratio, _["collection"], _["set"], _["part"]));
+  print("# multilingual2.py: allocated {:,d} tokens of {:,d} ({:,.2f}%)."
         "".format(allocation, horizon, allocation / horizon * 100),
-        file = sys.stderr, flush = True);
+        flush = True);
 
 if __name__ == "__main__":
   main();
