@@ -12,3 +12,8 @@ cat ../../training/collection/baby/datamix.txt \
 ```
 awk -F, '{ if ($1 && $6) printf("%.6f flag/%s/megatron-lm/%s/shard_0000_text_document\n", $6 / 2e12, $2, $3); }' multilingual1.csv > multilingual1.txt
 ```
+
+```
+awk '/^[0-9.]+ / {printf("%.6f %s\n", $1 * 0.75, $2); }' dominant0.txt > multilingual3.txt
+awk '/^[0-9.]+ / {printf("%.6f %s\n", $1 * 2.27, $2); }' multilingual1.txt >> multilingual3.txt
+```
