@@ -3,7 +3,7 @@
 # -*- coding: utf-8; -*-
 
 #
-# compute data mix ratios according to various constraints
+# compute (equitable, multilingual) data mix ratios according to various constraints
 #
 # ./multilingual2.py --horizon 2e12 --scale 0.18 \
 #   --languages languages.txt --repeat 2 \
