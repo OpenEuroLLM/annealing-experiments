@@ -17,7 +17,7 @@ def render(path, base, out):
 def main():
   parser = argparse.ArgumentParser(
     description = "Render <ratio> <relpath> datamix lines as a one-line LUMI datamix")
-  parser.add_argument("inputs", nargs = "+",
+  parser.add_argument("--inputs", nargs = "+",
     help = "source file(s) in '<ratio> <relpath>' format, in order")
   parser.add_argument("--dominant", type = str, default = None,
     help = "optional baseline dominant file prepended before the inputs")
