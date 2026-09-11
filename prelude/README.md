@@ -26,3 +26,9 @@ awk -F, '{ if ($1 && $6) printf("%.6f flag/%s/megatron-lm/%s/shard_0000_text_doc
 awk '/^[0-9.]+ / {printf("%.6f %s\n", $1 * 0.75, $2); }' dominant0.txt > multilingual3.txt
 awk '/^[0-9.]+ / {printf("%.6f %s\n", $1 * 2.27, $2); }' multilingual1.txt >> multilingual3.txt
 ```
+
+## Dominant Mixes
+
+```
+for i in jenia*.txt; do egrep 'agenttrove-0.0|common-pile-stackv2-0.1|common-pile-stackv2-edu-0.1|dclm-1.0|dolmino-mix-100b-1125|finemath-0.0.0|finepdfs-1.0.0/megatron-lm/eng_Latn|finepdfs-edu-1.0.0/megatron-lm/eng_Latn|finephrase-0.0.0|hplt-4.0/megatron-lm/clean/eng_Latn|megamath-0.0.0|mixture-vitae-1.0-nuggets|nemotron-cc-1.0|nemotron-pretraining-specialized-1.0|nemotron-pretraining-specialized-1.1|openwebmath-0.0.0|starcoder-0.0.0|swallow-code-2.0|swallow-math-2.0' $i | sed 's,/scratch/project_465002530/training/collection/,,g' | sort -k 2,3 > dominant${i##jenia}; done
+```
