@@ -12,14 +12,15 @@ Designed to run inside the shared LAIF ROCm container. The benchmark family <-> 
 mapping is embedded (parsed from oellm-eval's ``task-groups.yaml``) so the
 script is self-contained with no extra bind mounts.
 
-Example usage (inside container, working bind)::
+Example usage (inside container, working bind):
 
     singularity exec \
       --bind /pfs/lustrep4/scratch/project_465002891:/scratch/project_465002891 \
       /scratch/project_465002530/containers/laif-rocm-6.4.4-pytorch-2.9.1-te-2.4.0-fa-2.8.0-triton-3.2.0.sif \
       python plot_eval_progress.py \
         --input results.csv \
-        --output_dir plots/
+        --output_dir plots/ \
+        --origin_checkpoint /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312
 """
 
 from __future__ import annotations
@@ -29,7 +30,6 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 import matplotlib
-
 matplotlib.use("Agg")  # non-interactive backend; safe inside a container
 import matplotlib.pyplot as plt
 import numpy as np
@@ -613,6 +613,56 @@ def classify_task(task: str) -> Tuple[str, Optional[str]]:
 
 
 # --------------------------------------------------------------------------- #
+# Origin checkpoint (common starting point of all model lines)
+# --------------------------------------------------------------------------- #
+# Training step used for the prepended origin point when the checkpoint path
+# (or its resolved model_name) carries no iter_ token. Matches
+# baby_9b_dense_before-annealing/checkpoints/iter_0953312.
+DEFAULT_ORIGIN_STEP = 953312
+
+
+def _hf_models_tail(name: str) -> str:
+    """Path identity from ``/hf_models/`` onwards (ignores the mount-point
+    prefix, so /pfs/lustrep4/scratch/... and /scratch/... compare equal)."""
+    name = str(name).rstrip("/")
+    i = name.find("/hf_models/")
+    return name[i:] if i != -1 else name
+
+
+def _resolve_origin_model(df: pd.DataFrame, path: str) -> str:
+    """Map a user-supplied checkpoint path to a model_name present in the data.
+
+    Matching order: exact string, /hf_models/ tail, (run, step) via
+    parse_model, then a unique run-only match (with a warning). Raises
+    SystemExit listing the evaluated models if nothing matches."""
+    candidates = list(df["model_name"].unique())
+    p = str(path).rstrip("/")
+    if p in candidates:
+        return p
+    tail = _hf_models_tail(p)
+    for c in candidates:
+        if _hf_models_tail(c) == tail:
+            return c
+    run, step = parse_model(p)
+    for c in candidates:
+        c_run, c_step = parse_model(c)
+        if c_run == run and step is not None and c_step == step:
+            return c
+    same_run = [c for c in candidates if parse_model(c)[0] == run]
+    if len(same_run) == 1:
+        print(
+            f"[warn] --origin_checkpoint: no exact match for {p}; using the "
+            f"only evaluated checkpoint of run '{run}': {same_run[0]}"
+        )
+        return same_run[0]
+    avail = "\n  ".join(sorted(candidates))
+    raise SystemExit(
+        f"[error] --origin_checkpoint: '{path}' is not among the evaluated "
+        f"models. Evaluated model_names:\n  {avail}"
+    )
+
+
+# --------------------------------------------------------------------------- #
 # Data loading
 # --------------------------------------------------------------------------- #
 def gather_input_files(inputs: List[str]) -> List[Path]:
@@ -750,6 +800,33 @@ def _model_colour_map(models: List[str]) -> Dict[str, Tuple[float, ...]]:
     return out
 
 
+def _with_origin(
+    sub: pd.DataFrame,
+    model: str,
+    origin: Optional[Tuple[str, int, object]],
+    key: object,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """(steps, scores) for one model's series, with the origin checkpoint's
+    point (origin_step, origin_score) prepended as the first (leftmost) point.
+
+    ``origin`` is (origin_run, origin_step, score_getter) where
+    ``score_getter(key)`` returns the origin's score for this family/language
+    (or None). The point is skipped for the origin run itself, when no score
+    is available, or when the model already has its own point at origin_step."""
+    steps = sub["step"].to_numpy()
+    scores = sub["score"].to_numpy()
+    if origin is None or model == origin[0]:
+        return steps, scores
+    s0 = origin[2](key)
+    if s0 is None or (isinstance(s0, float) and np.isnan(s0)):
+        return steps, scores
+    if origin[1] in steps:
+        return steps, scores
+    steps = np.concatenate(([origin[1]], steps))
+    scores = np.concatenate(([s0], scores))
+    return steps, scores
+
+
 def _plot_one_family(
     fam_key: str,
     df_fam: pd.DataFrame,
@@ -759,6 +836,7 @@ def _plot_one_family(
     dpi: int,
     pdf: bool,
     suffix: str = "",
+    origin: Optional[Tuple[str, int, object]] = None,
 ) -> Optional[Path]:
     """Plot the averaged view for one family. Returns saved PNG path or None."""
     if df_fam.empty:
@@ -776,9 +854,8 @@ def _plot_one_family(
         sub = df_fam[df_fam["run"] == m].sort_values("step")
         if sub.empty:
             continue
-        steps = sub["step"].to_numpy()
-        scores = sub["score"].to_numpy()
-        if len(sub) == 1 or pd.isna(steps).any():
+        steps, scores = _with_origin(sub, m, origin, fam_key)
+        if len(steps) == 1 or pd.isna(steps).any():
             only_points = True
             ax.scatter(steps, scores, color=colour_map[m], label=m, zorder=3)
         else:
@@ -821,6 +898,7 @@ def _plot_by_language(
     out_dir: Path,
     dpi: int,
     pdf: bool,
+    origin: Optional[Tuple[str, int, object]] = None,
 ) -> Optional[Path]:
     """Small-multiples: one subplot per language for one family."""
     if df_fam_lang.empty:
@@ -847,9 +925,8 @@ def _plot_by_language(
             ].sort_values("step")
             if sub.empty:
                 continue
-            steps = sub["step"].to_numpy()
-            scores = sub["score"].to_numpy()
-            if len(sub) == 1 or pd.isna(steps).any():
+            steps, scores = _with_origin(sub, m, origin, lang)
+            if len(steps) == 1 or pd.isna(steps).any():
                 ax.scatter(steps, scores, color=colour_map[m], s=18, zorder=3)
             else:
                 ax.plot(
@@ -897,6 +974,7 @@ def _plot_overview_grid(
     colour_map: Dict[str, Tuple[float, ...]],
     out_dir: Path,
     dpi: int,
+    origin: Optional[Tuple[str, int, object]] = None,
 ) -> Optional[Path]:
     """One figure with a small subplot per family (averaged view)."""
     fams = sorted(agg["family"].unique())
@@ -915,9 +993,8 @@ def _plot_overview_grid(
             ms = sub[sub["run"] == m].sort_values("step")
             if ms.empty:
                 continue
-            steps = ms["step"].to_numpy()
-            scores = ms["score"].to_numpy()
-            if len(ms) == 1 or pd.isna(steps).any():
+            steps, scores = _with_origin(ms, m, origin, fam_key)
+            if len(steps) == 1 or pd.isna(steps).any():
                 ax.scatter(steps, scores, color=colour_map[m], s=14, zorder=3)
             else:
                 ax.plot(
@@ -951,19 +1028,13 @@ def _plot_overview_grid(
     return path
 
 
-def _plot_macro_average(
-    agg: pd.DataFrame,
-    models: List[str],
-    colour_map: Dict[str, Tuple[float, ...]],
-    out_dir: Path,
-    dpi: int,
-) -> Optional[Path]:
-    """One line per model = mean z-score across families (per-family z-score
-    normalized, since metrics differ: acc vs chrf++ vs bleu)."""
+def _macro_frame(agg: pd.DataFrame) -> pd.DataFrame:
+    """Per (run, step) mean z-score across families (per-family z-score
+    normalized, since metrics differ: acc vs chrf++ vs bleu).
+    Returns a DataFrame with columns [run, step, macro_z]."""
     if agg.empty:
-        return None
+        return pd.DataFrame(columns=["run", "step", "macro_z"])
 
-    # z-score within each family: (score - family mean) / family std
     def _z(group: pd.DataFrame) -> pd.DataFrame:
         s = group["score"]
         mu = s.mean()
@@ -979,16 +1050,30 @@ def _plot_macro_average(
         .reset_index()
         .rename(columns={"z": "macro_z"})
     )
+    return macro
+
+
+def _plot_macro_average(
+    agg: pd.DataFrame,
+    models: List[str],
+    colour_map: Dict[str, Tuple[float, ...]],
+    out_dir: Path,
+    dpi: int,
+    origin: Optional[Tuple[str, int, object]] = None,
+) -> Optional[Path]:
+    """One line per model = mean z-score across families (per-family z-score
+    normalized, since metrics differ: acc vs chrf++ vs bleu)."""
+    macro = _macro_frame(agg)
     if macro.empty:
         return None
+    macro = macro.rename(columns={"macro_z": "score"})
     fig, ax = plt.subplots(figsize=(7, 4.5))
     for m in models:
         sub = macro[macro["run"] == m].sort_values("step")
         if sub.empty:
             continue
-        steps = sub["step"].to_numpy()
-        scores = sub["macro_z"].to_numpy()
-        if len(sub) == 1 or pd.isna(steps).any():
+        steps, scores = _with_origin(sub, m, origin, None)
+        if len(steps) == 1 or pd.isna(steps).any():
             ax.scatter(steps, scores, color=colour_map[m], label=m, zorder=3)
         else:
             ax.plot(steps, scores, marker="o", color=colour_map[m], label=m, zorder=3)
@@ -1086,6 +1171,17 @@ def main(argv: Optional[List[str]] = None) -> int:
         action="store_true",
         help="Skip individual per-family PNGs (use with the " "consolidated views).",
     )
+    ap.add_argument(
+        "--origin_checkpoint",
+        default=None,
+        metavar="PATH",
+        help="Path to an evaluated checkpoint whose per-benchmark "
+        "scores become the first (leftmost) point of every "
+        "other model's lines, so all models visually "
+        "continue from it. The point's training step is "
+        "parsed from the checkpoint path, defaulting to "
+        f"{DEFAULT_ORIGIN_STEP} if not parseable.",
+    )
     args = ap.parse_args(argv)
 
     # Expand comma lists for --families / --exclude
@@ -1104,6 +1200,31 @@ def main(argv: Optional[List[str]] = None) -> int:
     colour_map = _model_colour_map(models)
     print(f"[info] models: {models}")
 
+    # --- origin checkpoint (common starting point) ------------------------- #
+    origin_run: Optional[str] = None
+    origin_step: Optional[int] = None
+    o_fam_scores: Dict[str, float] = {}
+    o_lang_scores: Dict[Tuple[str, Optional[str]], float] = {}
+    if args.origin_checkpoint:
+        resolved = _resolve_origin_model(df, args.origin_checkpoint)
+        origin_run, parsed_step = parse_model(resolved)
+        if parsed_step is None:
+            parsed_step = DEFAULT_ORIGIN_STEP
+            print(
+                f"[warn] --origin_checkpoint: no iter_ token in {resolved}; "
+                f"defaulting its step to {DEFAULT_ORIGIN_STEP}"
+            )
+        origin_step = parsed_step
+        o_rows = df[df["model_name"] == resolved]
+        o_fam_scores = o_rows.groupby("family")["performance"].mean().to_dict()
+        o_lang_scores = (
+            o_rows.groupby(["family", "lang"])["performance"].mean().to_dict()
+        )
+        print(
+            f"[info] origin checkpoint: {resolved} "
+            f"(run={origin_run}, step={origin_step})"
+        )
+
     # --- per-family averaged plots --------------------------------------- #
     agg = aggregate_averaged(df)
     all_fams = sorted(agg["family"].unique())
@@ -1114,8 +1235,20 @@ def main(argv: Optional[List[str]] = None) -> int:
     if not args.no_per_family:
         for fam_key in fams:
             sub = agg[agg["family"] == fam_key]
+            origin = (
+                (origin_run, origin_step, o_fam_scores.get)
+                if origin_run is not None
+                else None
+            )
             p = _plot_one_family(
-                fam_key, sub, models, colour_map, out_dir, args.dpi, args.pdf
+                fam_key,
+                sub,
+                models,
+                colour_map,
+                out_dir,
+                args.dpi,
+                args.pdf,
+                origin=origin,
             )
             if p:
                 saved.append(p)
@@ -1131,6 +1264,15 @@ def main(argv: Optional[List[str]] = None) -> int:
                         .reset_index()
                         .rename(columns={"performance": "score"})
                     )
+                    origin_lang = (
+                        (
+                            origin_run,
+                            origin_step,
+                            lambda f: o_lang_scores.get((f, args.language)),
+                        )
+                        if origin_run is not None
+                        else None
+                    )
                     p2 = _plot_one_family(
                         fam_key,
                         lang_agg,
@@ -1140,6 +1282,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                         args.dpi,
                         args.pdf,
                         suffix=f"__{args.language}",
+                        origin=origin_lang,
                     )
                     if p2:
                         saved.append(p2)
@@ -1149,17 +1292,49 @@ def main(argv: Optional[List[str]] = None) -> int:
         agg_lang = aggregate_per_language(df)
         for fam_key in fams:
             sub = agg_lang[agg_lang["family"] == fam_key]
+            origin_by_lang = (
+                (
+                    origin_run,
+                    origin_step,
+                    lambda l, _f=fam_key: o_lang_scores.get((_f, l)),
+                )
+                if origin_run is not None
+                else None
+            )
             p = _plot_by_language(
-                fam_key, sub, models, colour_map, out_dir, args.dpi, args.pdf
+                fam_key,
+                sub,
+                models,
+                colour_map,
+                out_dir,
+                args.dpi,
+                args.pdf,
+                origin=origin_by_lang,
             )
             if p:
                 saved.append(p)
 
     # --- consolidated views ---------------------------------------------- #
-    grid_path = _plot_overview_grid(agg, models, colour_map, out_dir, args.dpi)
+    origin_grid = (
+        (origin_run, origin_step, o_fam_scores.get) if origin_run is not None else None
+    )
+    grid_path = _plot_overview_grid(
+        agg, models, colour_map, out_dir, args.dpi, origin=origin_grid
+    )
     if grid_path:
         saved.append(grid_path)
-    macro_path = _plot_macro_average(agg, models, colour_map, out_dir, args.dpi)
+    origin_macro = None
+    if origin_run is not None:
+        macro_frame = _macro_frame(agg)
+        msub = macro_frame[macro_frame["run"] == origin_run]
+        exact = msub[msub["step"] == origin_step]
+        if not exact.empty:
+            msub = exact
+        origin_macro_z = float(msub.iloc[0]["macro_z"]) if not msub.empty else None
+        origin_macro = (origin_run, origin_step, lambda _k: origin_macro_z)
+    macro_path = _plot_macro_average(
+        agg, models, colour_map, out_dir, args.dpi, origin=origin_macro
+    )
     if macro_path:
         saved.append(macro_path)
 
