@@ -12,6 +12,8 @@ Designed to run inside the shared LAIF ROCm container. The benchmark family <-> 
 mapping is embedded (parsed from oellm-eval's ``task-groups.yaml``) so the
 script is self-contained with no extra bind mounts.
 
+Saves the source scores as a single `eval_results.tsv` file in the current directory.
+
 Example usage (inside container, working bind):
 
     singularity exec \
@@ -710,6 +712,7 @@ def load_results(inputs: List[str]) -> pd.DataFrame:
     df = df.drop_duplicates(
         subset=["model_name", "task", "n_shot"], keep="last"
     ).reset_index(drop=True)
+    df.to_csv("eval_results.tsv", sep="\t", index=False)
     return df
 
 
