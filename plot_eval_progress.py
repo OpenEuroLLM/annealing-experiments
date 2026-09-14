@@ -6,7 +6,13 @@ Reads one or more ``results.csv`` files produced by ``oellm-eval collect``
 line plot per benchmark family showing how each model's score evolved across
 intermediate checkpoints. For multilingual benchmarks, scores are
 macro-averaged across languages by default; per-language and single-language
-views are also supported.
+views are also supported. The consolidated macro-average plot combines the
+per-family scores into one line per model: ``--summary zscore`` (default)
+per-family z-score normalization, or ``--summary naive`` plain mean of the
+raw family scores. In naive mode, families whose task scores extend beyond
+the 0-1 range (e.g. BLEU or chrf++ reported on a 0-100 scale) are first
+rescaled to 0-1 (a BLEU of 21 counts as 0.21); this rescaling affects only
+the naive macro-average plot, all other plots keep the raw scores.
 
 Designed to run inside the shared LAIF ROCm container. The benchmark family <-> language
 mapping is embedded (parsed from oellm-eval's ``task-groups.yaml``) so the
@@ -1031,12 +1037,22 @@ def _plot_overview_grid(
     return path
 
 
-def _macro_frame(agg: pd.DataFrame) -> pd.DataFrame:
-    """Per (run, step) mean z-score across families (per-family z-score
-    normalized, since metrics differ: acc vs chrf++ vs bleu).
-    Returns a DataFrame with columns [run, step, macro_z]."""
+def _summary_frame(agg: pd.DataFrame, method: str = "zscore") -> pd.DataFrame:
+    """Per (run, step) summary score across families.
+
+    ``method`` selects the aggregation: 'zscore' normalizes each family to a
+    z-score first (needed when metrics differ: acc vs chrf++ vs bleu) and
+    averages the z-scores; 'naive' plain-averages the raw per-family scores,
+    mixing metrics as-is.
+    Returns a DataFrame with columns [run, step, score]."""
     if agg.empty:
-        return pd.DataFrame(columns=["run", "step", "macro_z"])
+        return pd.DataFrame(columns=["run", "step", "score"])
+    if method == "naive":
+        return (
+            agg.groupby(["run", "step"], dropna=False)["score"]
+            .mean()
+            .reset_index()
+        )
 
     def _z(group: pd.DataFrame) -> pd.DataFrame:
         s = group["score"]
@@ -1051,9 +1067,37 @@ def _macro_frame(agg: pd.DataFrame) -> pd.DataFrame:
         zdf.groupby(["run", "step"], dropna=False)["z"]
         .mean()
         .reset_index()
-        .rename(columns={"z": "macro_z"})
+        .rename(columns={"z": "score"})
     )
     return macro
+
+
+def _rescale_naive_scores(agg: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:
+    """Rescale out-of-range families to the 0-1 scale for the naive summary.
+
+    Detects tasks whose performance extends beyond the 0-1 range (metrics
+    reported on a 0-100 scale, e.g. bleu or chrf++) and returns a copy of
+    ``agg`` with the affected families' scores divided by 100 (a BLEU of 21
+    becomes 0.21) so that the naive mean averages comparable scores. Prints a
+    [warn] listing the rescaled families. Only the naive macro-average view
+    should consume the result; all other plots keep the raw scores."""
+    if agg.empty:
+        return agg
+    oor = df[df["performance"] > 1.0]
+    if oor.empty:
+        return agg
+    fams = sorted(oor["family"].unique())
+    metrics = sorted(oor["base_metric"].unique())
+    out = agg.copy()
+    mask = out["family"].isin(fams)
+    out.loc[mask, "score"] = out.loc[mask, "score"] / 100.0
+    names = ", ".join(family_display_name(f) for f in fams)
+    print(
+        f"[warn] naive summary: {oor['task'].nunique()} task(s) with scores "
+        f"outside the 0-1 range (metric(s): {', '.join(metrics)}); "
+        f"rescaling to 0-1 (score / 100) for the macro-average only: {names}"
+    )
+    return out
 
 
 def _plot_macro_average(
@@ -1063,13 +1107,22 @@ def _plot_macro_average(
     out_dir: Path,
     dpi: int,
     origin: Optional[Tuple[str, int, object]] = None,
+    method: str = "zscore",
 ) -> Optional[Path]:
-    """One line per model = mean z-score across families (per-family z-score
-    normalized, since metrics differ: acc vs chrf++ vs bleu)."""
-    macro = _macro_frame(agg)
+    """One line per model summarizing all families: mean of per-family
+    z-scores (method='zscore', default) or naive mean of per-family scores
+    (method='naive', metrics mixed as-is)."""
+    macro = _summary_frame(agg, method)
     if macro.empty:
         return None
-    macro = macro.rename(columns={"macro_z": "score"})
+    if method == "naive":
+        title = "Macro-average across benchmarks (naive mean of per-family scores)"
+        ylabel = "mean score (across families)"
+        stem = "macro_average_naive"
+    else:
+        title = "Macro-average across benchmarks (per-family z-score)"
+        ylabel = "mean z-score (across families)"
+        stem = "macro_average_zscore"
     fig, ax = plt.subplots(figsize=(7, 4.5))
     for m in models:
         sub = macro[macro["run"] == m].sort_values("step")
@@ -1080,14 +1133,15 @@ def _plot_macro_average(
             ax.scatter(steps, scores, color=colour_map[m], label=m, zorder=3)
         else:
             ax.plot(steps, scores, marker="o", color=colour_map[m], label=m, zorder=3)
-    ax.set_title("Macro-average across benchmarks (per-family z-score)")
+    ax.set_title(title)
     ax.set_xlabel("Training step")
-    ax.set_ylabel("mean z-score (across families)")
+    ax.set_ylabel(ylabel)
     ax.grid(True, alpha=0.3)
-    ax.axhline(0.0, color="0.7", lw=0.8, ls="--")
+    if method != "naive":
+        ax.axhline(0.0, color="0.7", lw=0.8, ls="--")
     ax.legend(loc="best", fontsize=8)
     fig.tight_layout()
-    path = out_dir / "macro_average.png"
+    path = out_dir / f"{stem}.png"
     fig.savefig(path, dpi=dpi)
     plt.close(fig)
     return path
@@ -1184,6 +1238,16 @@ def main(argv: Optional[List[str]] = None) -> int:
         "continue from it. The point's training step is "
         "parsed from the checkpoint path, defaulting to "
         f"{DEFAULT_ORIGIN_STEP} if not parseable.",
+    )
+    ap.add_argument(
+        "--summary",
+        choices=("zscore", "naive"),
+        default="zscore",
+        help="Aggregation for the consolidated macro-average plot: "
+        "'zscore' (default) normalizes each family to a z-score and "
+        "averages those; 'naive' plain-averages the per-family scores, "
+        "first rescaling families whose task scores extend beyond 0-1 "
+        "(e.g. BLEU on a 0-100 scale) to the 0-1 range.",
     )
     args = ap.parse_args(argv)
 
@@ -1326,20 +1390,27 @@ def main(argv: Optional[List[str]] = None) -> int:
     )
     if grid_path:
         saved.append(grid_path)
-    origin_macro = None
+    agg_summary = _rescale_naive_scores(agg, df) if args.summary == "naive" else agg
+    origin_summary = None
     if origin_run is not None:
-        macro_frame = _macro_frame(agg)
-        msub = macro_frame[macro_frame["run"] == origin_run]
-        exact = msub[msub["step"] == origin_step]
+        summary_frame = _summary_frame(agg_summary, args.summary)
+        ssub = summary_frame[summary_frame["run"] == origin_run]
+        exact = ssub[ssub["step"] == origin_step]
         if not exact.empty:
-            msub = exact
-        origin_macro_z = float(msub.iloc[0]["macro_z"]) if not msub.empty else None
-        origin_macro = (origin_run, origin_step, lambda _k: origin_macro_z)
-    macro_path = _plot_macro_average(
-        agg, models, colour_map, out_dir, args.dpi, origin=origin_macro
+            ssub = exact
+        origin_summary_score = float(ssub.iloc[0]["score"]) if not ssub.empty else None
+        origin_summary = (origin_run, origin_step, lambda _k: origin_summary_score)
+    summary_path = _plot_macro_average(
+        agg_summary,
+        models,
+        colour_map,
+        out_dir,
+        args.dpi,
+        origin=origin_summary,
+        method=args.summary,
     )
-    if macro_path:
-        saved.append(macro_path)
+    if summary_path:
+        saved.append(summary_path)
 
     print(f"[info] wrote {len(saved)} plot(s) to {out_dir}")
     for p in saved:
