@@ -18,7 +18,7 @@ Designed to run inside the shared LAIF ROCm container. The benchmark family <-> 
 mapping is embedded (parsed from oellm-eval's ``task-groups.yaml``) so the
 script is self-contained with no extra bind mounts.
 
-Saves the source scores as a single `eval_results.tsv` file in the current directory.
+Saves the source scores as a single `eval_results.csv` file in the current directory.
 
 Example usage (inside container, working bind):
 
@@ -48,7 +48,9 @@ import pandas as pd
 # Benchmark family <-> language mapping.
 #
 # Each entry: family_key -> dict(families=[...], template=<str with {lang}>,
-# langs=[...], n_shot=int). A family_key groups tasks that share a benchmark;
+# langs=[...], n_shot=int, or a list of shot variants for a task evaluated
+# at several shot counts (rendered '0/10' in plot titles). A family_key groups
+# tasks that share a benchmark;
 # directional benchmarks (flores200, opensubtitles) are split into per-direction
 # family_keys. ``template`` is the lm_eval/lighteval task name with ``{lang}``
 # as the language placeholder; expanding it over ``langs`` yields the concrete
@@ -545,6 +547,191 @@ FAMILIES: Dict[str, dict] = {
         "metric": "exact_match",
         "tiers": ["low", "medium", "high", "top"],
     },
+    # --- dclm-core-22: single-task (English) benchmarks, one family per
+    # task (group-prefixed key, lang=None). n_shot per task-groups.yaml
+    # (hellaswag is evaluated at both 0 and 10 shots — the variants
+    # average into one family and its plot label shows n_shot=0/10);
+    # metric per task_metrics, omitted where undeclared (jeopardy) so the
+    # y-label falls back to the metric observed in the data. ------------- #
+    "dclm_core_22_agieval_lsat_ar": {
+        "template": "agieval_lsat_ar",
+        "langs": [None],
+        "n_shot": 3,
+        "metric": "acc",
+    },
+    "dclm_core_22_arc_easy": {
+        "template": "arc_easy",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "acc_norm",
+    },
+    "dclm_core_22_arc_challenge": {
+        "template": "arc_challenge",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "acc_norm",
+    },
+    "dclm_core_22_boolq": {
+        "template": "boolq",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "acc",
+    },
+    "dclm_core_22_commonsense_qa": {
+        "template": "commonsense_qa",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "acc",
+    },
+    "dclm_core_22_copa": {
+        "template": "copa",
+        "langs": [None],
+        "n_shot": 0,
+        "metric": "acc",
+    },
+    "dclm_core_22_hellaswag": {
+        "template": "hellaswag",
+        "langs": [None],
+        "n_shot": [0, 10],
+        "metric": "acc_norm",
+    },
+    "dclm_core_22_openbookqa": {
+        "template": "openbookqa",
+        "langs": [None],
+        "n_shot": 0,
+        "metric": "acc_norm",
+    },
+    "dclm_core_22_piqa": {
+        "template": "piqa",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "acc_norm",
+    },
+    "dclm_core_22_bigbench_language_identification_multiple_choice": {
+        "template": "bigbench_language_identification_multiple_choice",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "acc",
+    },
+    "dclm_core_22_winogrande": {
+        "template": "winogrande",
+        "langs": [None],
+        "n_shot": 0,
+        "metric": "acc",
+    },
+    "dclm_core_22_wsc273": {
+        "template": "wsc273",
+        "langs": [None],
+        "n_shot": 0,
+        "metric": "acc",
+    },
+    "dclm_core_22_lambada_openai": {
+        "template": "lambada_openai",
+        "langs": [None],
+        "n_shot": 0,
+        "metric": "acc",
+    },
+    "dclm_core_22_bigbench_qa_wikidata_generate_until": {
+        "template": "bigbench_qa_wikidata_generate_until",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "exact_match",
+    },
+    "dclm_core_22_bigbench_dyck_languages_generate_until": {
+        "template": "bigbench_dyck_languages_generate_until",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "exact_match",
+    },
+    "dclm_core_22_bigbench_operators_generate_until": {
+        "template": "bigbench_operators_generate_until",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "exact_match",
+    },
+    "dclm_core_22_bigbench_repeat_copy_logic_generate_until": {
+        "template": "bigbench_repeat_copy_logic_generate_until",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "exact_match",
+    },
+    "dclm_core_22_bigbench_cs_algorithms_generate_until": {
+        "template": "bigbench_cs_algorithms_generate_until",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "exact_match",
+    },
+    "dclm_core_22_coqa": {
+        "template": "coqa",
+        "langs": [None],
+        "n_shot": 0,
+        "metric": "f1",
+    },
+    "dclm_core_22_squadv2": {
+        "template": "squadv2",
+        "langs": [None],
+        "n_shot": 10,
+        "metric": "f1",
+    },
+    "dclm_core_22_jeopardy": {
+        "template": "jeopardy",
+        "langs": [None],
+        "n_shot": 10,
+    },
+    # --- reasoning: single-task (English) benchmarks, one family per task
+    # (group-prefixed key, lang=None). n_shot per task-groups.yaml; metrics
+    # are not declared there, so they are omitted and the y-label falls
+    # back to the metric observed in the data. ---------------------------- #
+    "reasoning_gsm8k": {
+        "template": "gsm8k",
+        "langs": [None],
+        "n_shot": 4,
+    },
+    "reasoning_ifeval": {
+        "template": "ifeval",
+        "langs": [None],
+        "n_shot": 0,
+    },
+    "reasoning_mbpp": {
+        "template": "mbpp",
+        "langs": [None],
+        "n_shot": 3,
+    },
+    "reasoning_GPQADiamond": {
+        "template": "GPQADiamond",
+        "langs": [None],
+        "n_shot": 0,
+    },
+    "reasoning_MATH500": {
+        "template": "MATH500",
+        "langs": [None],
+        "n_shot": 0,
+    },
+    "reasoning_LiveCodeBench": {
+        "template": "LiveCodeBench",
+        "langs": [None],
+        "n_shot": 0,
+    },
+    "reasoning_HumanEval": {
+        "template": "HumanEval",
+        "langs": [None],
+        "n_shot": 0,
+    },
+    "reasoning_AIME24": {
+        "template": "AIME24",
+        "langs": [None],
+        "n_shot": 0,
+    },
+    "reasoning_AIME25": {
+        "template": "AIME25",
+        "langs": [None],
+        "n_shot": 0,
+    },
+    "reasoning_AMC23": {
+        "template": "AMC23",
+        "langs": [None],
+        "n_shot": 0,
+    },
 }
 
 
@@ -750,6 +937,18 @@ def family_metric(fam_key: str, df_fam: pd.DataFrame) -> str:
     return "score"
 
 
+def _n_shot_label(spec: Optional[dict], df_fam: pd.DataFrame) -> str:
+    """n_shot label for a family plot: the family's declared n_shot if the
+    spec has one (a list of shot variants renders as '0/10'), else the most
+    common n_shot observed in the data."""
+    if spec and spec.get("n_shot") is not None:
+        v = spec["n_shot"]
+        if isinstance(v, (list, tuple)):
+            return "/".join(str(s) for s in v)
+        return str(v)
+    return str(int(df_fam["n_shot"].mode().iloc[0] or 0))
+
+
 def aggregate_averaged(df: pd.DataFrame) -> pd.DataFrame:
     """Macro-average performance across languages within each
     (family, run, step). Returns one row per (family, run, step)."""
@@ -835,9 +1034,8 @@ def _plot_one_family(
         return None
     metric = family_metric(fam_key, df_fam)
     fam_title = family_display_name(fam_key)
-    # n_shot label: take the family-declared n_shot if known, else mode.
     spec = FAMILIES.get(fam_key)
-    n_shot = spec["n_shot"] if spec else int(df_fam["n_shot"].mode().iloc[0] or 0)
+    n_shot = _n_shot_label(spec, df_fam)
 
     fig, ax = plt.subplots(figsize=(7, 4.5))
     has_line = False
@@ -901,7 +1099,7 @@ def _plot_by_language(
     metric = family_metric(fam_key, df_fam_lang)
     fam_title = family_display_name(fam_key)
     spec = FAMILIES.get(fam_key)
-    n_shot = spec["n_shot"] if spec else int(df_fam_lang["n_shot"].mode().iloc[0] or 0)
+    n_shot = _n_shot_label(spec, df_fam_lang)
 
     n = len(langs)
     ncol = min(4, n)
