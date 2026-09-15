@@ -6,9 +6,9 @@ Reads one or more ``results.csv`` files produced by ``oellm-eval collect``
 line plot per benchmark family showing how each model's score evolved across
 intermediate checkpoints. For multilingual benchmarks, scores are
 macro-averaged across languages by default; per-language and single-language
-views are also supported. The consolidated macro-average plot combines the
-per-family scores into one line per model: ``--summary zscore`` (default)
-per-family z-score normalization, or ``--summary naive`` plain mean of the
+views are also supported.
+The consolidated macro-average plot combines the per-family scores into one line per model:
+``--summary zscore`` (default) per-family z-score normalization, or ``--summary naive`` plain mean of the
 raw family scores. In naive mode, families whose task scores extend beyond
 the 0-1 range (e.g. BLEU or chrf++ reported on a 0-100 scale) are first
 rescaled to 0-1 (a BLEU of 21 counts as 0.21); this rescaling affects only
@@ -538,45 +538,28 @@ FAMILIES: Dict[str, dict] = {
         "metric": "bleu",
         "direction": "en\u2192X",
     },
-    # --- polymath: one family per difficulty tier ------------------------- #
-    "polymath_low": {
-        "template": "polymath_{lang}_low",
+    "polymath": {
+        "template": "polymath_{lang}_{tier}",
         "langs": ["de", "en", "es", "fr", "it", "pt"],
         "n_shot": 0,
         "metric": "exact_match",
-        "tier": "low",
-    },
-    "polymath_medium": {
-        "template": "polymath_{lang}_medium",
-        "langs": ["de", "en", "es", "fr", "it", "pt"],
-        "n_shot": 0,
-        "metric": "exact_match",
-        "tier": "medium",
-    },
-    "polymath_high": {
-        "template": "polymath_{lang}_high",
-        "langs": ["de", "en", "es", "fr", "it", "pt"],
-        "n_shot": 0,
-        "metric": "exact_match",
-        "tier": "high",
-    },
-    "polymath_top": {
-        "template": "polymath_{lang}_top",
-        "langs": ["de", "en", "es", "fr", "it", "pt"],
-        "n_shot": 0,
-        "metric": "exact_match",
-        "tier": "top",
+        "tiers": ["low", "medium", "high", "top"],
     },
 }
 
 
-def _build_task_index() -> Dict[str, Tuple[str, str]]:
+def _build_task_index() -> Dict[str, List]:
     """Reverse map: task_name -> (family_key, lang)."""
     idx: Dict[str, Tuple[str, str]] = {}
     for fam_key, spec in FAMILIES.items():
         tmpl = spec["template"]
-        for lang in spec["langs"]:
-            idx[tmpl.format(lang=lang)] = (fam_key, lang)
+        if "tiers" in spec:
+            for tier in spec["tiers"]:
+                for lang in spec["langs"]:
+                    idx[tmpl.format(lang=lang, tier=tier)] = (fam_key, lang, tier)
+        else:
+            for lang in spec["langs"]:
+                idx[tmpl.format(lang=lang)] = (fam_key, lang)
     return idx
 
 
@@ -718,7 +701,7 @@ def load_results(inputs: List[str]) -> pd.DataFrame:
     df = df.drop_duplicates(
         subset=["model_name", "task", "n_shot"], keep="last"
     ).reset_index(drop=True)
-    df.to_csv("eval_results.tsv", sep="\t", index=False)
+    df.to_csv("eval_results.csv", index=False)
     return df
 
 
@@ -1123,6 +1106,7 @@ def _plot_macro_average(
         title = "Macro-average across benchmarks (per-family z-score)"
         ylabel = "mean z-score (across families)"
         stem = "macro_average_zscore"
+    print(macro)
     fig, ax = plt.subplots(figsize=(7, 4.5))
     for m in models:
         sub = macro[macro["run"] == m].sort_values("step")
