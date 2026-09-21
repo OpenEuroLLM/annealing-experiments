@@ -3,7 +3,11 @@
 # -*- coding: utf-8; -*-
 
 #
+# distribute ratios in (abstract, per-part) data mix proportionally to token shards.
 #
+# for i in 1 2 3; do ./share.py multilingual${i}.txt > multilingual${i}s.txt; done
+#
+
 import argparse;
 import glob;
 import io;
