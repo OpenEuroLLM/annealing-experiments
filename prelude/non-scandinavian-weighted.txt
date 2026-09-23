@@ -168,7 +168,6 @@
 0.0015710311 flag/swallow-math-2.0/megatron-lm/shard_0000_text_document
 0.0000474000 flag/finepdfs-1.0.0/megatron-lm/gle_Latn/shard_0000_text_document
 0.0000123600 flag/finepdfs-1.0.0/megatron-lm/mlt_Latn/shard_0000_text_document
-0.0000194400 flag/finepdfs-1.0.0/megatron-lm/nno_Latn/shard_0000_text_document
 0.0000532800 flag/finepdfs-edu-1.0.0/megatron-lm/als_Latn/shard_0000_text_document
 0.0000573600 flag/finepdfs-edu-1.0.0/megatron-lm/bos_Latn/shard_0000_text_document
 0.0000756000 flag/finepdfs-edu-1.0.0/megatron-lm/bul_Cyrl/shard_0000_text_document
