@@ -1,3 +1,4 @@
+model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200,arc_challenge,10,0.6109215017064846,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-16-09-20-11/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200,arc_easy,10,0.8489057239057239,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-16-09-20-11/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200,bigbench_cs_algorithms_generate_until,10,0.5037878787878788,"exact_match,strict-match",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-16-09-20-11/results.csv

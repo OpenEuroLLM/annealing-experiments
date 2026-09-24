@@ -1,3 +1,4 @@
+model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,belebele_bul_Cyrl,5,0.7144444444444444,"acc,none",/scratch/project_465002891/prelude-mid/evals/before-annealing/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,multiblimp_pol,0,0.9138141809290954,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/before-annealing/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,hellaswag_sv,0,0.6428414821311116,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/before-annealing/results.csv

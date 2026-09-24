@@ -1,3 +1,4 @@
+model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,arc_challenge,10,0.590443686006826,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,arc_challenge,10,0.590443686006826,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-15-09-44-52/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,arc_easy,10,0.8472222222222222,"acc_norm,none",evals_multi_dclm.csv
