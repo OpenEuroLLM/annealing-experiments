@@ -32,17 +32,19 @@ Example usage (inside container, working bind):
 """
 
 from __future__ import annotations
+
 import argparse
 import re
 import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+
 import matplotlib
+
 matplotlib.use("Agg")  # non-interactive backend; safe inside a container
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
 
 # --------------------------------------------------------------------------- #
 # Benchmark family <-> language mapping.
@@ -752,7 +754,6 @@ def _build_task_index() -> Dict[str, List]:
 
 _TASK_INDEX = _build_task_index()
 
-
 # --------------------------------------------------------------------------- #
 # Parsing helpers
 # --------------------------------------------------------------------------- #
@@ -976,6 +977,14 @@ def aggregate_per_language(df: pd.DataFrame) -> pd.DataFrame:
 # Stable colour cycle across families so a given model keeps the same colour.
 _GLOBAL_CMAP = plt.get_cmap("tab20")
 
+_LEGEND_STRIP_PREFIX = "baby_9b_dense"
+
+
+def _legend_label(run: str) -> str:
+    if run.startswith(_LEGEND_STRIP_PREFIX):
+        return run.removeprefix(_LEGEND_STRIP_PREFIX).lstrip("_-")
+    return run
+
 
 def _model_colour_map(models: List[str]) -> Dict[str, Tuple[float, ...]]:
     models = sorted(models)
@@ -1047,9 +1056,18 @@ def _plot_one_family(
         steps, scores = _with_origin(sub, m, origin, fam_key)
         if len(steps) == 1 or pd.isna(steps).any():
             only_points = True
-            ax.scatter(steps, scores, color=colour_map[m], label=m, zorder=3)
+            ax.scatter(
+                steps, scores, color=colour_map[m], label=_legend_label(m), zorder=3
+            )
         else:
-            ax.plot(steps, scores, marker="o", color=colour_map[m], label=m, zorder=3)
+            ax.plot(
+                steps,
+                scores,
+                marker="o",
+                color=colour_map[m],
+                label=_legend_label(m),
+                zorder=3,
+            )
             has_line = True
 
     ax.set_title(f"{fam_title}  (n_shot={n_shot})")
@@ -1138,7 +1156,8 @@ def _plot_by_language(
     )
     # shared legend
     handles = [
-        plt.Line2D([0], [0], color=colour_map[m], marker="o", label=m) for m in models
+        plt.Line2D([0], [0], color=colour_map[m], marker="o", label=_legend_label(m))
+        for m in models
     ]
     fig.legend(
         handles=handles,
@@ -1202,7 +1221,8 @@ def _plot_overview_grid(
         axes[j // ncol][j % ncol].axis("off")
     fig.suptitle("All benchmarks (avg across languages)", fontsize=12)
     handles = [
-        plt.Line2D([0], [0], color=colour_map[m], marker="o", label=m) for m in models
+        plt.Line2D([0], [0], color=colour_map[m], marker="o", label=_legend_label(m))
+        for m in models
     ]
     fig.legend(
         handles=handles,
@@ -1229,11 +1249,7 @@ def _summary_frame(agg: pd.DataFrame, method: str = "zscore") -> pd.DataFrame:
     if agg.empty:
         return pd.DataFrame(columns=["run", "step", "score"])
     if method == "naive":
-        return (
-            agg.groupby(["run", "step"], dropna=False)["score"]
-            .mean()
-            .reset_index()
-        )
+        return agg.groupby(["run", "step"], dropna=False)["score"].mean().reset_index()
 
     def _z(group: pd.DataFrame) -> pd.DataFrame:
         s = group["score"]
@@ -1289,6 +1305,7 @@ def _plot_macro_average(
     dpi: int,
     origin: Optional[Tuple[str, int, object]] = None,
     method: str = "zscore",
+    supergroup: str = "multilingual",
 ) -> Optional[Path]:
     """One line per model summarizing all families: mean of per-family
     z-scores (method='zscore', default) or naive mean of per-family scores
@@ -1297,14 +1314,15 @@ def _plot_macro_average(
     if macro.empty:
         return None
     if method == "naive":
-        title = "Macro-average across benchmarks (naive mean of per-family scores)"
+        title = f"Macro-average across benchmarks (naive mean of per-family scores): {supergroup}"
         ylabel = "mean score (across families)"
         stem = "macro_average_naive"
     else:
-        title = "Macro-average across benchmarks (per-family z-score)"
+        title = f"Macro-average across benchmarks: {supergroup}"
         ylabel = "mean z-score (across families)"
         stem = "macro_average_zscore"
     print(macro)
+    macro.to_csv(f"averaged_scores_{supergroup}.csv", index=False)
     fig, ax = plt.subplots(figsize=(7, 4.5))
     for m in models:
         sub = macro[macro["run"] == m].sort_values("step")
@@ -1312,9 +1330,18 @@ def _plot_macro_average(
             continue
         steps, scores = _with_origin(sub, m, origin, None)
         if len(steps) == 1 or pd.isna(steps).any():
-            ax.scatter(steps, scores, color=colour_map[m], label=m, zorder=3)
+            ax.scatter(
+                steps, scores, color=colour_map[m], label=_legend_label(m), zorder=3
+            )
         else:
-            ax.plot(steps, scores, marker="o", color=colour_map[m], label=m, zorder=3)
+            ax.plot(
+                steps,
+                scores,
+                marker="o",
+                color=colour_map[m],
+                label=_legend_label(m),
+                zorder=3,
+            )
     ax.set_title(title)
     ax.set_xlabel("Training step")
     ax.set_ylabel(ylabel)
@@ -1430,6 +1457,12 @@ def main(argv: Optional[List[str]] = None) -> int:
         "averages those; 'naive' plain-averages the per-family scores, "
         "first rescaling families whose task scores extend beyond 0-1 "
         "(e.g. BLEU on a 0-100 scale) to the 0-1 range.",
+    )
+    ap.add_argument(
+        "--supergroup",
+        choices=("oellm-multilingual-eu", "dclm-core-22", "reasoning"),
+        default="oellm-multilingual-eu",
+        help="Task supergroup. The name is put in the title of the summary plot.",
     )
     args = ap.parse_args(argv)
 
@@ -1590,6 +1623,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         args.dpi,
         origin=origin_summary,
         method=args.summary,
+        supergroup=args.supergroup,
     )
     if summary_path:
         saved.append(summary_path)
