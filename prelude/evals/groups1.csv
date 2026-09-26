@@ -27,7 +27,7 @@ belebele_ces_Latn,multilingual
 belebele_dan_Latn,multilingual
 belebele_deu_Latn,multilingual
 belebele_ell_Grek,multilingual
-belebele_eng_Latn,multilingual
+belebele_eng_Latn,english
 belebele_est_Latn,multilingual
 belebele_fin_Latn,multilingual
 belebele_fra_Latn,multilingual
@@ -46,12 +46,12 @@ belebele_slk_Latn,multilingual
 belebele_slv_Latn,multilingual
 belebele_spa_Latn,multilingual
 belebele_swe_Latn,multilingual
-bigbench_cs_algorithms_generate_until
-bigbench_dyck_languages_generate_until
-bigbench_language_identification_multiple_choice
-bigbench_operators_generate_until
-bigbench_qa_wikidata_generate_until
-bigbench_repeat_copy_logic_generate_until
+bigbench_cs_algorithms_generate_until,english
+bigbench_dyck_languages_generate_until,english
+bigbench_language_identification_multiple_choice,english
+bigbench_operators_generate_until,english
+bigbench_qa_wikidata_generate_until,english
+bigbench_repeat_copy_logic_generate_until,english
 boolq,english
 commonsense_qa,english
 copa,english
@@ -70,7 +70,7 @@ global_mgsm_sr,reasoning
 global_mmlu_full_cs,multilingual
 global_mmlu_full_de,multilingual
 global_mmlu_full_el,multilingual
-global_mmlu_full_en,multilingual
+global_mmlu_full_en,english
 global_mmlu_full_es,multilingual
 global_mmlu_full_fr,multilingual
 global_mmlu_full_it,multilingual
@@ -91,7 +91,7 @@ global_piqa_completions_ces_latn,multilingual
 global_piqa_completions_deu_latn,multilingual
 global_piqa_completions_ekk_latn,multilingual
 global_piqa_completions_ell_grek,multilingual
-global_piqa_completions_eng_latn,multilingual
+global_piqa_completions_eng_latn,english
 global_piqa_completions_fin_latn,multilingual
 global_piqa_completions_fra_latn_fran,multilingual
 global_piqa_completions_glg_latn,multilingual
@@ -123,7 +123,7 @@ global_piqa_prompted_ces_latn,multilingual
 global_piqa_prompted_deu_latn,multilingual
 global_piqa_prompted_ekk_latn,multilingual
 global_piqa_prompted_ell_grek,multilingual
-global_piqa_prompted_eng_latn,multilingual
+global_piqa_prompted_eng_latn,english
 global_piqa_prompted_fin_latn,multilingual
 global_piqa_prompted_fra_latn_fran,multilingual
 global_piqa_prompted_glg_latn,multilingual
@@ -188,7 +188,7 @@ include_base_44_ukrainian,multilingual
 jeopardy,english
 lambada_openai,english
 mgsm_native_cot_de,multilingual
-mgsm_native_cot_en,multilingual
+mgsm_native_cot_en,english
 mgsm_native_cot_es,multilingual
 mgsm_native_cot_fr,multilingual
 multiblimp_bul,multilingual
@@ -197,7 +197,7 @@ multiblimp_ces,multilingual
 multiblimp_dan,multilingual
 multiblimp_deu,multilingual
 multiblimp_ell,multilingual
-multiblimp_eng,multilingual
+multiblimp_eng,english
 multiblimp_est,multilingual
 multiblimp_eus,multilingual
 multiblimp_fin,multilingual
@@ -307,7 +307,7 @@ sib200_ces_Latn,multilingual
 sib200_dan_Latn,multilingual
 sib200_deu_Latn,multilingual
 sib200_ell_Grek,multilingual
-sib200_eng_Latn,multilingual
+sib200_eng_Latn,english
 sib200_est_Latn,multilingual
 sib200_eus_Latn,multilingual
 sib200_fin_Latn,multilingual
@@ -337,7 +337,7 @@ sib200_tur_Latn,multilingual
 sib200_ukr_Cyrl,multilingual
 winogrande,english
 xcsqa_deu_Latn,multilingual
-xcsqa_eng_Latn,multilingual
+xcsqa_eng_Latn,english
 xcsqa_fra_Latn,multilingual
 xcsqa_ita_Latn,multilingual
 xcsqa_nld_Latn,multilingual
