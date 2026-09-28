@@ -95,7 +95,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant3/checkpoints/iter_0955696,openbookqa,0,0.418,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-20-20-21-01/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant3/checkpoints/iter_0955696,piqa,10,0.824265505984766,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-20-20-21-01/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant3/checkpoints/iter_0955696,winogrande,0,0.7292817679558011,"acc,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-20-20-21-01/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955200,arc_challenge,10,0.6109215017064846,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955200,arc_easy,10,0.8539562289562289,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955200,bigbench_cs_algorithms_generate_until,10,0.5227272727272727,"exact_match,strict-match",evals_multi_dclm.csv
@@ -134,7 +133,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955696,openbookqa,0,0.438,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955696,piqa,10,0.8302502720348205,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955696,winogrande,0,0.7237569060773481,"acc,none",evals_multi_dclm.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual1/checkpoints/iter_0955200,arc_challenge,10,0.6126279863481229,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual1/checkpoints/iter_0955200,arc_easy,10,0.8585858585858586,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual1/checkpoints/iter_0955200,bigbench_cs_algorithms_generate_until,10,0.5590909090909091,"exact_match,strict-match",evals_multi_dclm.csv
@@ -247,7 +245,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual3/checkpoints/iter_0955696,openbookqa,0,0.436,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual3/checkpoints/iter_0955696,piqa,10,0.8280739934711643,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual3/checkpoints/iter_0955696,winogrande,0,0.7103393843725335,"acc,none",evals_multi_dclm.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0955200,arc_challenge,10,0.5981228668941979,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-02/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0955200,arc_easy,10,0.8501683501683501,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-02/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0955200,bigbench_cs_algorithms_generate_until,10,0.6606060606060606,"exact_match,strict-match",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-02/results.csv
@@ -590,7 +587,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0965232,openbookqa,0,0.402,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-31/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0965232,piqa,10,0.8215451577801959,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-31/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0965232,winogrande,0,0.7269139700078927,"acc,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-31/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200,arc_challenge,10,0.6109215017064846,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-16-09-20-11/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200,arc_easy,10,0.8489057239057239,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-16-09-20-11/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200,bigbench_cs_algorithms_generate_until,10,0.5037878787878788,"exact_match,strict-match",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-16-09-20-11/results.csv
@@ -705,7 +701,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0965232,openbookqa,0,0.432,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-15-22-46-40/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0965232,piqa,10,0.8253536452665942,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-15-22-46-40/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0965232,winogrande,0,0.7229676400947119,"acc,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-15-22-46-40/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0955200,arc_challenge,10,0.6006825938566553,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-32/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0955200,arc_easy,10,0.8535353535353535,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-32/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0955200,bigbench_cs_algorithms_generate_until,10,0.5409090909090909,"exact_match,strict-match",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-32/results.csv
@@ -1048,7 +1043,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0965232,openbookqa,0,0.438,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-59/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0965232,piqa,10,0.8362350380848749,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-59/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0965232,winogrande,0,0.7316495659037096,"acc,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-19-19-44-59/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant1/checkpoints/iter_0955200,arc_challenge,10,0.5571672354948806,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/50bt_dominant/2026-09-22-13-03-42/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant1/checkpoints/iter_0955200,arc_easy,10,0.8329124579124579,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/50bt_dominant/2026-09-22-13-03-42/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant1/checkpoints/iter_0955200,bigbench_cs_algorithms_generate_until,10,0.6151515151515151,"exact_match,strict-match",/scratch/project_465002891/prelude-mid/evals/stoepen/50bt_dominant/2026-09-22-13-03-42/results.csv
@@ -1220,7 +1214,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant3/checkpoints/iter_0959272,openbookqa,0,0.422,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/50bt_dominant/2026-09-22-13-04-02/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant3/checkpoints/iter_0959272,piqa,10,0.8258977149075082,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/50bt_dominant/2026-09-22-13-04-02/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant3/checkpoints/iter_0959272,winogrande,0,0.7213891081294396,"acc,none",/scratch/project_465002891/prelude-mid/evals/stoepen/50bt_dominant/2026-09-22-13-04-02/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0955200,arc_challenge,10,0.6040955631399317,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0955200,arc_easy,10,0.8539562289562289,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0955200,bigbench_cs_algorithms_generate_until,10,0.5242424242424243,"exact_match,strict-match",evals_multi_dclm.csv
@@ -1278,7 +1271,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0959272,openbookqa,0,0.424,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0959272,piqa,10,0.8307943416757345,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0959272,winogrande,0,0.7198105761641673,"acc,none",evals_multi_dclm.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0955200,arc_challenge,10,0.613481228668942,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0955200,arc_easy,10,0.8573232323232324,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0955200,bigbench_cs_algorithms_generate_until,10,0.5,"exact_match,strict-match",evals_multi_dclm.csv
@@ -1449,7 +1441,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual3/checkpoints/iter_0959272,openbookqa,0,0.424,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual3/checkpoints/iter_0959272,piqa,10,0.8291621327529923,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual3/checkpoints/iter_0959272,winogrande,0,0.712707182320442,"acc,none",evals_multi_dclm.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,arc_challenge,10,0.590443686006826,"acc_norm,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,arc_challenge,10,0.590443686006826,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-15-09-44-52/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,arc_easy,10,0.8472222222222222,"acc_norm,none",evals_multi_dclm.csv
@@ -1488,7 +1479,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,piqa,10,0.8182807399347116,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-15-09-44-52/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,winogrande,0,0.6906077348066298,"acc,none",evals_multi_dclm.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,winogrande,0,0.6906077348066298,"acc,none",/scratch/project_465002891/prelude-mid/evals/stoepen/2026-09-15-09-44-52/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant1/checkpoints/iter_0955696,global_piqa_completions_nob_latn,0,0.69,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/20b/2026-09-15-17-32-39/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant1/checkpoints/iter_0955200,sib200_gle_Latn,0,0.25,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/20b/2026-09-15-17-32-39/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant1/checkpoints/iter_0955696,sib200_spa_Latn,0,0.25,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/20b/2026-09-15-17-32-39/results.csv
@@ -3457,7 +3447,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant3/checkpoints/iter_0955200,global_piqa_completions_glg_latn,0,0.81,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/20b/2026-09-16-00-28-21/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant3/checkpoints/iter_0955200,include_base_44_albanian,0,0.676950998185118,"acc,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/20b/2026-09-16-00-28-21/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant3/checkpoints/iter_0955696,include_base_44_lithuanian,0,0.5973782771535581,"acc,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/20b/2026-09-16-00-28-21/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955200,arc_challenge_mt_bg,0,0.4462457337883959,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-12-17-10-56/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955200,arc_challenge_mt_cs,0,0.4232081911262799,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-12-17-10-56/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955200,arc_challenge_mt_da,0,0.4360068259385665,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-12-17-10-56/results.csv
@@ -4114,7 +4103,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955696,xcsqa_pol_Latn,0,0.346,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-09-17-53-45/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955696,xcsqa_por_Latn,0,0.407,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-09-17-53-45/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955696,xcsqa_spa_Latn,0,0.378,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-09-17-53-45/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual1/checkpoints/iter_0955200,belebele_spa_Latn,5,0.7677777777777778,"acc,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-10-04-36-11/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual1/checkpoints/iter_0955200,opensubtitles_multi40_en_to_sr,0,12.620460916877718,"bleu,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-10-04-36-11/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual1/checkpoints/iter_0955696,belebele_pol_Latn,5,0.7755555555555556,"acc,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-10-04-36-11/results.csv
@@ -6081,7 +6069,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual2/checkpoints/iter_0955696,mgsm_native_cot_en,5,0.356,"exact_match,strict-match",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-12-17-12-29/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual2/checkpoints/iter_0955696,arc_challenge_mt_lt,0,0.4291808873720136,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-12-17-12-29/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual2/checkpoints/iter_0955696,arc_challenge_mt_pt,0,0.4573378839590443,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/20b/2026-09-12-17-12-29/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0957600,global_piqa_prompted_glg_latn,0,0.38,"exact_match,strict_match",/scratch/project_465002891/prelude-mid/evals/english_mixtures/100b/2026-09-18-17-01-52/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0957600,belebele_ita_Latn,5,0.7922222222222223,"acc,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/100b/2026-09-18-17-01-52/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0957600,polymath_fr_low,0,0.624,"exact_match,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/100b/2026-09-18-17-01-52/results.csv
@@ -11986,7 +11973,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0962400,sib200_kat_Geor,0,0.25,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/100b/2026-09-20-21-00-56/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0955200,opensubtitles_multi40_en_to_tr,0,14.476811863491974,"bleu,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/100b/2026-09-20-21-00-56/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0965232,hellaswag_da,0,0.6738312735088662,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/english_mixtures/100b/2026-09-20-21-00-56/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200,arc_challenge_mt_bg,0,0.431740614334471,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-12-18-07/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200,arc_challenge_mt_cs,0,0.4325938566552901,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-12-18-07/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200,arc_challenge_mt_da,0,0.4266211604095563,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-12-18-07/results.csv
@@ -13955,7 +13941,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0965232,xcsqa_pol_Latn,0,0.353,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-12-18-07/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0965232,xcsqa_por_Latn,0,0.421,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-12-18-07/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0965232,xcsqa_spa_Latn,0,0.376,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-12-18-07/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0960000,sib200_mlt_Latn,0,0.25,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-00-03-30/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0955200,xcsqa_ita_Latn,0,0.395,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-00-03-30/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0957600,opensubtitles_multi40_en_to_lv,0,18.21692641303144,"bleu,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-00-03-30/results.csv
@@ -19860,7 +19845,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0957600,multiblimp_est,0,0.913009708737864,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-12-16-08/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0955200,global_piqa_completions_slk_latn,0,0.86,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-12-16-08/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0955200,global_mmlu_full_lt,5,0.5419455917960404,"acc,none",/scratch/project_465002891/prelude-mid/evals/100b/2026-09-14-12-16-08/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant1/checkpoints/iter_0955200,polymath_it_high,0,0.0,"exact_match,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-16-10-45-26/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant1/checkpoints/iter_0955200,belebele_lvs_Latn,5,0.8033333333333333,"acc,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-16-10-45-26/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant1/checkpoints/iter_0955200,global_piqa_completions_deu_latn,0,0.81,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-16-10-45-26/results.csv
@@ -22813,7 +22797,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant2/checkpoints/iter_0957600,belebele_nob_Latn,5,0.8455555555555555,"acc,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-18-16-18-35/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant2/checkpoints/iter_0957600,opensubtitles_multi40_en_to_no,0,30.178297424120125,"bleu,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-18-16-18-35/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant2/checkpoints/iter_0957600,global_piqa_prompted_nob_latn,0,0.47,"exact_match,strict_match",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-18-16-18-35/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0955200,arc_challenge_mt_bg,0,0.4385665529010238,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-11-22-59/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0955200,arc_challenge_mt_cs,0,0.4163822525597269,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-11-22-59/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0955200,arc_challenge_mt_da,0,0.4385665529010238,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-11-22-59/results.csv
@@ -23798,7 +23781,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0959272,xcsqa_pol_Latn,0,0.346,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-11-22-59/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0959272,xcsqa_por_Latn,0,0.409,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-11-22-59/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0959272,xcsqa_spa_Latn,0,0.391,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-11-22-59/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0955200,belebele_ces_Latn,5,0.7633333333333333,"acc,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-11-26-45/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0957600,arc_challenge_mt_it,0,0.4837883959044368,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-11-26-45/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0955200,sib200_lvs_Latn,0,0.25,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-11-26-45/results.csv
@@ -26751,7 +26733,6 @@ model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0959272,polymath_en_high,0,0.0,"exact_match,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-18-34-57/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0955200,opensubtitles_multi40_en_to_es,0,27.239329189736043,"bleu,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-18-34-57/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0959272,opensubtitles_multi40_no_to_en,0,31.19243604222185,"bleu,none",/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-09-13-18-34-57/results.csv
-model_name,task,n_shot,performance,metric_name,source_file
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,belebele_bul_Cyrl,5,0.7144444444444444,"acc,none",/scratch/project_465002891/prelude-mid/evals/before-annealing/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,multiblimp_pol,0,0.9138141809290954,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/before-annealing/results.csv
 /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312,hellaswag_sv,0,0.6428414821311116,"acc_norm,none",/scratch/project_465002891/prelude-mid/evals/before-annealing/results.csv
