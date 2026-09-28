@@ -28,12 +28,14 @@ Example usage (inside container, working bind):
       python plot_eval_progress.py \
         --input results.csv \
         --output_dir plots/ \
-        --origin_checkpoint /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312
+        --origin_checkpoint /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312 \
+        --supergroup multilingual
 """
 
 from __future__ import annotations
 
 import argparse
+import csv
 import re
 import sys
 from pathlib import Path
@@ -889,8 +891,103 @@ def load_results(inputs: List[str]) -> pd.DataFrame:
     df = df.drop_duplicates(
         subset=["model_name", "task", "n_shot"], keep="last"
     ).reset_index(drop=True)
-    df.to_csv("eval_results.csv", index=False)
     return df
+
+
+# --------------------------------------------------------------------------- #
+# Supergroup filtering
+# --------------------------------------------------------------------------- #
+NAMING_ONLY_SUPERGROUPS = ("oellm-multilingual-eu", "dclm-core-22")
+
+
+def load_task_groups(path: Path) -> Dict[str, str]:
+    """Read the supergroups file (headerless two-column CSV: task name,
+    supergroup) into a task -> supergroup dict."""
+    groups: Dict[str, str] = {}
+    with open(path, newline="", encoding="utf-8") as fh:
+        for lineno, row in enumerate(csv.reader(fh), 1):
+            fields = [f.strip() for f in row]
+            if len(fields) != 2 or not all(fields):
+                raise SystemExit(
+                    f"[error] {path}:{lineno}: expected 'task,supergroup', "
+                    f"got: {row}"
+                )
+            task, supergroup = fields
+            if task in groups and groups[task] != supergroup:
+                raise SystemExit(
+                    f"[error] {path}:{lineno}: task '{task}' listed with "
+                    f"conflicting supergroups '{groups[task]}' and "
+                    f"'{supergroup}'"
+                )
+            groups[task] = supergroup
+    if not groups:
+        raise SystemExit(f"[error] no task groupings found in {path}")
+    return groups
+
+
+def _resolve_groups_path(path_str: str) -> Optional[Path]:
+    """Groups file path as given (CWD-relative), else relative to the script."""
+    p = Path(path_str)
+    if p.is_file():
+        return p
+    alt = Path(__file__).resolve().parent / path_str
+    return alt if alt.is_file() else None
+
+
+def filter_by_supergroup(
+    df: pd.DataFrame, supergroup: str, groups_file: str
+) -> pd.DataFrame:
+    """Keep only the tasks the supergroups file assigns to ``supergroup``.
+
+    A supergroup defined in the groups file filters tasks (rows whose task
+    is not listed in the file are dropped as well); any other value (the
+    naming-only supergroups) leaves the data untouched and is used just for
+    the summary plot title and averaged_scores CSV name."""
+    path = _resolve_groups_path(groups_file)
+    if path is None:
+        if supergroup in NAMING_ONLY_SUPERGROUPS:
+            print(
+                f"[warn] supergroups file not found ({groups_file}); not "
+                f"filtering tasks for supergroup '{supergroup}'"
+            )
+            return df
+        raise SystemExit(
+            f"[error] --supergroup '{supergroup}' requires the supergroups "
+            f"file, not found: {groups_file} (also tried relative to the "
+            "script). Pass --supergroups_file."
+        )
+    groups = load_task_groups(path)
+    available = sorted(set(groups.values()))
+    if supergroup not in available:
+        if supergroup in NAMING_ONLY_SUPERGROUPS:
+            print(
+                f"[warn] supergroup '{supergroup}' is not defined in {path}; "
+                "naming only, no task filtering"
+            )
+            return df
+        raise SystemExit(
+            f"[error] --supergroup '{supergroup}' is not defined in {path}; "
+            f"available supergroups: {', '.join(available)}"
+        )
+    keep = {t for t, g in groups.items() if g == supergroup}
+    data_tasks = set(df["task"])
+    unlisted = sorted(data_tasks - set(groups))
+    out = df[df["task"].isin(keep)].reset_index(drop=True)
+    if out.empty:
+        raise SystemExit(
+            f"[error] no evaluated tasks belong to supergroup '{supergroup}' "
+            f"per {path}"
+        )
+    print(
+        f"[info] supergroup '{supergroup}': kept {len(out)} of {len(df)} rows, "
+        f"{out['task'].nunique()} of {len(data_tasks)} evaluated tasks"
+    )
+    if unlisted:
+        print(
+            f"[warn] {len(unlisted)} evaluated task(s) not listed in {path} "
+            f"were excluded: {', '.join(unlisted)}"
+        )
+    return out
 
 
 # --------------------------------------------------------------------------- #
@@ -1460,9 +1557,23 @@ def main(argv: Optional[List[str]] = None) -> int:
     )
     ap.add_argument(
         "--supergroup",
-        choices=("oellm-multilingual-eu", "dclm-core-22", "reasoning"),
+        choices=(
+            "oellm-multilingual-eu",
+            "dclm-core-22",
+            "reasoning",
+            "multilingual",
+            "english",
+        ),
         default="oellm-multilingual-eu",
-        help="Task supergroup. The name is put in the title of the summary plot.",
+        help="Task supergroup. If it names a supergroup defined in "
+        "--supergroups_file, only tasks belonging to it are processed; "
+        "otherwise the name is only put in the title of the summary plot.",
+    )
+    ap.add_argument(
+        "--supergroups_file",
+        default="prelude/evals/groups1.csv",
+        metavar="PATH",
+        help="csv file with task groupings (two columns: task name and group)",
     )
     args = ap.parse_args(argv)
 
@@ -1474,6 +1585,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     df = load_results(args.input)
+    df = filter_by_supergroup(df, args.supergroup, args.supergroups_file)
+    df.to_csv("eval_results.csv", index=False)
     df = annotate(df)
 
     models = sorted(df["run"].unique())
