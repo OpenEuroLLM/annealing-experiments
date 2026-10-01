@@ -13,11 +13,16 @@ cat ../../training/collection/baby/datamix.txt \
 
 ```
 awk -F, '{ if ($1 && $6) printf("%.6f flag/%s/megatron-lm/%s/shard_0000_text_document\n", $6 / 2e12, $2, $3); }' multilingual1.csv > multilingual1.txt
+
+./multilingual_4_5_6.py --inventory inventory_score.csv --languages languages.txt --horizon 2e12 --scale 1 --limit web:0.4 --limit code:0.08 --limit math:0.02 --limit mt:0.3 --limit pdf:0.15 --limit parallel:0.05 --fill web --fill pdf --step 1e6 --repeat 2 --distribution "hegemonic" --ratio 80:20 --bsc-edu-range 1.5-4.0 --include hplt-4.0-bsc-edu dclm-1.0 finemath-0.0.0 finepdfs-1.0.0 finepdfs-edu-1.0.0 megamath-0.0.0 nemotron-cc-1.0 olmo-mix-1124 starcoder-0.0.0 swallow-code-2.0 swallow-math-2.0 dochplt-3.1 fineopus-filtered-0.4 nemotron-cc-opus-1.1 nemotron-cc-tower+-0.1 finewiki-0.0.0 --output multilingual4.txt
+./multilingual_4_5_6.py --inventory inventory_score.csv --languages languages.txt --horizon 2e12 --scale 1 --limit web:0.4:4 --limit code:0.08 --limit math:0.02 --limit mt:0.3 --limit pdf:0.15 --limit parallel:0.05 --fill web:4 --fill pdf --step 1e6 --repeat 2 --distribution "equal" --ratio 80:20 --bsc-edu-range 0.0-4.0 --bsc-edu-partition "both" --include hplt-4.0-bsc-edu dclm-1.0 finemath-0.0.0 finepdfs-1.0.0 finepdfs-edu-1.0.0 megamath-0.0.0 nemotron-cc-1.0 olmo-mix-1124 starcoder-0.0.0 swallow-code-2.0 swallow-math-2.0 dochplt-3.1 fineopus-filtered-0.4 nemotron-cc-opus-1.1 nemotron-cc-tower+-0.1 finewiki-0.0.0--output multilingual5.txt
+./multilingual_4_5_6.py --inventory inventory_score.csv --languages languages.txt --horizon 2e12 --scale 1 --limit web:0.4 --limit code:0.08 --limit math:0.02 --limit mt:0.3 --limit pdf:0.15 --limit parallel:0.05 --fill web --fill pdf --step 1e6 --repeat 2 --distribution "hegemonic" --ratio 60:40 --bsc-edu-range 1.5-4.0 --include hplt-4.0-bsc-edu dclm-1.0 finemath-0.0.0 finepdfs-1.0.0 finepdfs-edu-1.0.0 megamath-0.0.0 nemotron-cc-1.0 olmo-mix-1124 starcoder-0.0.0 swallow-code-2.0 swallow-math-2.0 dochplt-3.1 fineopus-filtered-0.4 nemotron-cc-opus-1.1 nemotron-cc-tower+-0.1 finewiki-0.0.0 --output multilingual6.txt
 ```
 
 ## Multilingual Equity
 
-```./multilingual2.py --horizon 2e12 --scale 0.18 --limit web:0.5 --limit mt:0.3 --limit pdf:0.15 --limit parallel:0.05 --fill web --fill pdf flag.csv > multilingual2.txt
+```
+./multilingual2.py --horizon 2e12 --scale 0.18 --limit web:0.5 --limit mt:0.3 --limit pdf:0.15 --limit parallel:0.05 --fill web --fill pdf flag.csv > multilingual2.txt
 ```
 
 ## Less English: 40% Multilingual
