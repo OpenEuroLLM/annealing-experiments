@@ -380,7 +380,7 @@ FAMILIES: Dict[str, dict] = {
             "hungarian",
             "italian",
             "lithuanian",
-            "north macedonian",
+            "north_macedonian",
             "polish",
             "portuguese",
             "serbian",
