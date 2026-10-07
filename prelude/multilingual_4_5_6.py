@@ -9,7 +9,6 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List, Optional, Set, TextIO, Tuple
 
-
 SCRIPT_DIR = Path(__file__).resolve().parent
 DOMAINS = {"wiki", "web", "mt", "pdf", "parallel", "math", "code", "other"}
 LIMIT_DOMAINS = DOMAINS | {"all"}
@@ -73,18 +72,21 @@ def classify_domain(dataset: str) -> str:
         return "pdf"
     if "finewiki" in name:
         return "wiki"
-    if name.startswith(("hplt-3.0", "hplt-4.0", "dclm-1.0", "hplt-4.0-bsc-edu", "fineweb2-hq", "finephrase-0.0.0", "nemotron-cc-1.0", "olmo-mix-1124")):
+    if name.startswith(("hplt-3.0", "hplt-4.0", "dclm-1.0", "hplt-4.0-bsc-edu", "fineweb2-hq", "finephrase-0.0.0",
+                        "nemotron-cc-1.0", "olmo-mix-1124")):
         return "web"
-    if name.startswith(("mixture-vitae", "nemotron-mind", "nemotron-pretraining-specialized", "openthoughts", "agenttrove", "dolmino-mix-100b-1125")):
+    if name.startswith(
+            ("mixture-vitae", "nemotron-mind", "nemotron-pretraining-specialized", "openthoughts", "agenttrove",
+             "dolmino-mix-100b-1125")):
         return "sft"
     return "other"
 
 
 def classify_language(
-    dataset: str,
-    part: str,
-    code_to_language: Dict[str, str],
-    domain: str,
+        dataset: str,
+        part: str,
+        code_to_language: Dict[str, str],
+        domain: str,
 ) -> Tuple[str, bool]:
     identity = f"{dataset}/{part}"
     for code in sorted(code_to_language, key=len, reverse=True):
@@ -98,12 +100,12 @@ def classify_language(
 
 
 def read_inventory(
-    path: Path,
-    excluded: Set[str],
-    included: Set[str],
-    code_to_language: Dict[str, str],
-    bsc_edu_range: Optional[Tuple[float, float]] = None,
-    bsc_edu_partition: str = "both",
+        path: Path,
+        excluded: Set[str],
+        included: Set[str],
+        code_to_language: Dict[str, str],
+        bsc_edu_range: Optional[Tuple[float, float]] = None,
+        bsc_edu_partition: str = "both",
 ) -> List[Part]:
     required = {"collection", "dataset", "part", "full_path", "byte_size"}
     aggregated = defaultdict(int)  # type: Dict[Tuple[str, str, str, str], int]
@@ -149,7 +151,7 @@ def read_inventory(
             if bsc_edu_partition != "both" and partition_name != bsc_edu_partition:
                 continue
             if bsc_edu_range is not None and (
-                score is None or not (bsc_edu_range[0] <= score <= bsc_edu_range[1])
+                    score is None or not (bsc_edu_range[0] <= score <= bsc_edu_range[1])
             ):
                 continue
         parts.append(
@@ -311,12 +313,12 @@ def rank_allocate(parts: List[Part], target: float, repeat: int) -> float:
 
 
 def allocate_matched(
-    parts: List[Part],
-    target: float,
-    repeat: int,
-    step: int,
-    is_fill: bool,
-    bsc_edu_range: Optional[Tuple[float, float]],
+        parts: List[Part],
+        target: float,
+        repeat: int,
+        step: int,
+        is_fill: bool,
+        bsc_edu_range: Optional[Tuple[float, float]],
 ) -> None:
     spread = fill_in_steps if is_fill else proportional_allocate
     extra = (step,) if is_fill else ()
@@ -340,13 +342,13 @@ def allocate_matched(
 
 
 def allocate_group(
-    parts: List[Part],
-    target: float,
-    limits: List[Rule],
-    fills: List[Rule],
-    repeat: int,
-    step: int,
-    bsc_edu_range: Optional[Tuple[float, float]] = None,
+        parts: List[Part],
+        target: float,
+        limits: List[Rule],
+        fills: List[Rule],
+        repeat: int,
+        step: int,
+        bsc_edu_range: Optional[Tuple[float, float]] = None,
 ) -> None:
     initial_consumed = sum(part.consumed for part in parts)
     group_limits = limits if limits else ([] if fills else [Rule("all", 1.0, repeat)])
@@ -379,15 +381,15 @@ def allocate_group(
 
 
 def allocate(
-    parts: List[Part],
-    horizon: int,
-    ratio: Tuple[float, float],
-    distribution: str,
-    limits: List[Rule],
-    fills: List[Rule],
-    repeat: int,
-    step: int,
-    bsc_edu_range: Optional[Tuple[float, float]] = None,
+        parts: List[Part],
+        horizon: int,
+        ratio: Tuple[float, float],
+        distribution: str,
+        limits: List[Rule],
+        fills: List[Rule],
+        repeat: int,
+        step: int,
+        bsc_edu_range: Optional[Tuple[float, float]] = None,
 ) -> float:
     dominant_target = horizon * ratio[0]
     multilingual_target = horizon * ratio[1]
@@ -429,13 +431,13 @@ def format_tokens(value: float) -> str:
 
 
 def write_output(
-    stream: TextIO,
-    parts: List[Part],
-    horizon: float,
-    args: argparse.Namespace,
-    ratio: Tuple[float, float],
-    limits: List[Rule],
-    fills: List[Rule],
+        stream: TextIO,
+        parts: List[Part],
+        horizon: float,
+        args: argparse.Namespace,
+        ratio: Tuple[float, float],
+        limits: List[Rule],
+        fills: List[Rule],
 ) -> None:
     allocated = sum(part.consumed for part in parts)
     stream.write("# generated weighted file list\n")
@@ -563,7 +565,7 @@ def build_parser() -> argparse.ArgumentParser:
         metavar="DOMAIN[:REPEAT]",
         help="domain(s) eligible to fill remaining quota in --step increments; repeatable",
     )
-    parser.add_argument("--step", type = lambda _: int(float(_)), default=int(1e6), help="fill increment in tokens")
+    parser.add_argument("--step", type=lambda _: int(float(_)), default=int(1e6), help="fill increment in tokens")
     parser.add_argument("--repeat", type=int, default=2, help="maximum source passes by default")
     parser.add_argument("--ratio", default="60:40", help="dominant:multilingual, e.g. 60:40")
     parser.add_argument(

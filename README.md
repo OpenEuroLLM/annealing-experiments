@@ -1,6 +1,7 @@
 # Annealing mixtures experiments
 
-`plot_eval_progress.py` takes an an input the directories with the output of `oellm-eval` and produces comparative plots. Run as something like:
+`plot_eval_progress.py` takes an an input the directories with the output of `oellm-eval` and produces comparative
+plots. Run as something like:
 
 ```
 singularity exec \

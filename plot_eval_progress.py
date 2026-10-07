@@ -4,9 +4,10 @@
 Reads one or more ``results.csv`` files produced by ``oellm-eval collect``
 (columns: model_name, task, n_shot, performance, metric_name) and produces a
 line plot per benchmark family showing how each model's score evolved across
-intermediate checkpoints. For multilingual benchmarks, scores are
-macro-averaged across languages by default; per-language and single-language
-views are also supported.
+intermediate checkpoints. Tasks that report several evaluation metrics are
+reduced to the one metric declared for their family in ``FAMILIES``. For
+multilingual benchmarks, scores are macro-averaged across languages by default;
+per-language and single-language views are also supported.
 The consolidated macro-average plot combines the per-family scores into one line per model:
 ``--summary zscore`` (default) per-family z-score normalization, or ``--summary naive`` plain mean of the
 raw family scores. In naive mode, families whose task scores extend beyond
@@ -23,7 +24,7 @@ Saves the source scores as a single `eval_results.csv` file in the current direc
 Example usage (inside container, working bind):
 
     singularity exec \
-      --bind /pfs/lustrep4/scratch/project_465002891:/scratch/project_465002891 \
+      --bind /scratch/project_465002891:/scratch/project_465002891 \
       /scratch/project_465002530/containers/laif-rocm-6.4.4-pytorch-2.9.1-te-2.4.0-fa-2.8.0-triton-3.2.0.sif \
       python plot_eval_progress.py \
         --input results.csv \
@@ -105,7 +106,7 @@ FAMILIES: Dict[str, dict] = {
             "nob_Latn",
         ],
         "n_shot": 0,
-        "metric": "acc_norm",
+        "metric": "acc",
     },
     "belebele": {
         "template": "belebele_{lang}",
@@ -793,6 +794,17 @@ def classify_task(task: str) -> Tuple[str, Optional[str]]:
     return task, None
 
 
+def declared_task_metric(task: str) -> Optional[str]:
+    """Metric declared in FAMILIES for the task's family, or None when the
+    family declares no metric (the metric then falls back to the one
+    observed in the data)."""
+    fam_key = classify_task(task)[0]
+    spec = FAMILIES.get(fam_key)
+    if spec and spec.get("metric"):
+        return spec["metric"]
+    return None
+
+
 # --------------------------------------------------------------------------- #
 # Origin checkpoint (common starting point of all model lines)
 # --------------------------------------------------------------------------- #
@@ -887,6 +899,28 @@ def load_results(inputs: List[str]) -> pd.DataFrame:
     missing = required - set(df.columns)
     if missing:
         raise SystemExit(f"Missing required columns: {sorted(missing)}")
+    # Keep only the metric declared in FAMILIES for each task: result
+    # files from recent oellm-eval versions report several metrics per task
+    # (e.g. belebele 'acc' and 'acc_norm'); FAMILIES decides which one is plotted.
+    # Tasks whose family declares no metric and unknown tasks keep all
+    # their metrics.
+    declared = df["task"].map(declared_task_metric)
+    keep = declared.isna() | df["metric_name"].map(_base_metric).eq(declared)
+    dropped = df.loc[~keep]
+    if not dropped.empty:
+        print(
+            f"[info] metric filter: dropped {len(dropped)} row(s) whose "
+            "metric_name is not the metric declared in FAMILIES"
+        )
+        gone = sorted(set(dropped["task"]) - set(df.loc[keep, "task"]))
+        if gone:
+            fams = sorted({classify_task(t)[0] for t in gone})
+            print(
+                f"[warn] {len(gone)} task(s) report no row with the metric "
+                f"declared in FAMILIES and were dropped entirely (families: "
+                f"{', '.join(fams)}); check the 'metric' entries in FAMILIES"
+            )
+        df = df.loc[keep]
     # Dedup: later files / later rows win (matches oellm-eval collect semantics).
     df = df.drop_duplicates(
         subset=["model_name", "task", "n_shot"], keep="last"

@@ -7,6 +7,7 @@ import re
 from glob import glob
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.ticker import PercentFormatter
@@ -39,6 +40,7 @@ TOKENS_PER_ITER = {
 APERTUS_TOKENS_RE = re.compile(r"tokens(\d+(?:\.\d+)?)([BT])")
 ITER_RE = re.compile(r"iter_(\d+)")
 OLMO_STEP_RE = re.compile(r"stage1-step(\d+)")
+
 
 def compute_tokens_b(row):
     data, iter_ = row["data"], row["iter"]
@@ -92,12 +94,12 @@ FIGURES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "prelude"
 
 
 def plot_performance_vs_tokens(
-    avg_df,
-    benchmark_df,
-    output_name,
-    ylabel,
-    title,
-    value_col,
+        avg_df,
+        benchmark_df,
+        output_name,
+        ylabel,
+        title,
+        value_col,
 ):
     benchmarks = [(name, average_downstream_performance(group, value_col=value_col))
                   for name, group in benchmark_df.groupby("benchmark")] if benchmark_df is not None else []
@@ -183,7 +185,8 @@ BENCHMARKS = {
 
 
 def main():
-    dfs = [pd.read_csv(path) for path in sorted(glob(os.path.join(FIGURES_DIR, "*bt_multilingual", "eval_results.csv")))]
+    dfs = [pd.read_csv(path) for path in
+           sorted(glob(os.path.join(FIGURES_DIR, "*bt_multilingual", "eval_results.csv")))]
     df = pd.concat(dfs, ignore_index=True)
     df = df.drop_duplicates(["model_name", "task", "n_shot", "metric_name"])
     df = df.rename(columns={"performance": "score"})
