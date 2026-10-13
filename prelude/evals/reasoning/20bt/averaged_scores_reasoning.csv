@@ -1,0 +1,16 @@
+run,step,score
+baby_9b_dense_anneal20b_english1,955200,1.0447619611633694
+baby_9b_dense_anneal20b_english1,955696,1.224793692989953
+baby_9b_dense_anneal20b_english2,955200,1.303104597840377
+baby_9b_dense_anneal20b_english2,955696,1.2348706323287866
+baby_9b_dense_anneal20b_english3,955200,1.1645379296200373
+baby_9b_dense_anneal20b_english3,955696,1.2178648594468573
+baby_9b_dense_anneal20b_multilingual1,955200,-0.6304196066797849
+baby_9b_dense_anneal20b_multilingual1,955696,-0.5057106055456372
+baby_9b_dense_anneal20b_multilingual2,955200,-0.7395939514983307
+baby_9b_dense_anneal20b_multilingual2,955696,-0.6322045335615274
+baby_9b_dense_anneal20b_multilingual3,955200,-0.8438352636393962
+baby_9b_dense_anneal20b_multilingual3,955696,-0.8503423492147448
+baby_9b_dense_anneal20b_no-change,955200,-0.8196897832304971
+baby_9b_dense_anneal20b_no-change,955696,-0.848768296316876
+baby_9b_dense_before-annealing,953312,-1.319369283702584

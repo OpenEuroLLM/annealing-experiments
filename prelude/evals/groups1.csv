@@ -299,6 +299,8 @@ polymath_pt_high,reasoning
 polymath_pt_low,reasoning
 polymath_pt_medium,reasoning
 polymath_pt_top,reasoning
+gsm8k,reasoning
+mbpp,reasoning
 sib200_als_Latn,null
 sib200_bos_Latn,null
 sib200_bul_Cyrl,null
