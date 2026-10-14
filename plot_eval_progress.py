@@ -1301,7 +1301,7 @@ def _plot_by_language(
     fig.tight_layout(rect=(0, 0.06, 1, 0.97))
 
     safe = re.sub(r"[^A-Za-z0-9_.\-\u2192\[\]]+", "_", fam_title)
-    png_path = out_dir / f"{safe}__bylang.png"
+    png_path = out_dir / f"by-lang/{safe}__bylang.png"
     fig.savefig(png_path, dpi=dpi)
     if pdf:
         fig.savefig(out_dir / f"{safe}__bylang.pdf")
@@ -1454,7 +1454,7 @@ def _plot_macro_average(
         ylabel = "mean z-score (across families)"
         stem = "macro_average_zscore"
     print(macro)
-    macro.to_csv(f"averaged_scores_{supergroup}.csv", index=False)
+    macro.to_csv(f"{out_dir}/averaged_scores_{supergroup}.csv", index=False)
     fig, ax = plt.subplots(figsize=(7, 4.5))
     for m in models:
         sub = macro[macro["run"] == m].sort_values("step")
@@ -1621,7 +1621,7 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     df = load_results(args.input)
     df = filter_by_supergroup(df, args.supergroup, args.supergroups_file)
-    df.to_csv("eval_results.csv", index=False)
+    df.to_csv(f"{out_dir}/eval_results.csv", index=False)
     df = annotate(df)
 
     models = sorted(df["run"].unique())
