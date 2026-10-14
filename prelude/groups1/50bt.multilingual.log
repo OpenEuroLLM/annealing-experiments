@@ -1,0 +1,35 @@
+[info] loaded 57 rows from prelude/evals/dclm-core-22/50bt/baseline/results.csv
+[info] loaded 171 rows from prelude/evals/dclm-core-22/50bt/dominant/results.csv
+[info] loaded 170 rows from prelude/evals/dclm-core-22/50bt/multilingual/results.csv
+[info] loaded 984 rows from prelude/evals/oellm-multilingual-eu/50bt/baseline/results.csv
+[info] loaded 2952 rows from prelude/evals/oellm-multilingual-eu/50bt/dominant/results.csv
+[info] loaded 2952 rows from prelude/evals/oellm-multilingual-eu/50bt/multilingual/results.csv
+[info] loaded 6 rows from prelude/evals/reasoning/50bt/baseline/results.csv
+[info] loaded 18 rows from prelude/evals/reasoning/50bt/dominant/results.csv
+[info] loaded 18 rows from prelude/evals/reasoning/50bt/multilingual/results.csv
+[info] metric filter: dropped 756 row(s) whose metric_name is not the metric declared in FAMILIES
+[warn] 36 task(s) report no row with the metric declared in FAMILIES and were dropped entirely (families: sib200); check the 'metric' entries in FAMILIES
+[info] supergroup 'multilingual': kept 5187 of 6572 rows, 247 of 312 evaluated tasks
+[info] models: ['baby_9b_dense_anneal50b_dominant1', 'baby_9b_dense_anneal50b_dominant2', 'baby_9b_dense_anneal50b_dominant3', 'baby_9b_dense_anneal50b_multilingual1', 'baby_9b_dense_anneal50b_multilingual2', 'baby_9b_dense_anneal50b_multilingual3', 'baby_9b_dense_anneal50b_no-change']
+[error] --origin_checkpoint: '/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312' is not among the evaluated models. Evaluated model_names:
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant1/checkpoints/iter_0955200
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant1/checkpoints/iter_0957600
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant1/checkpoints/iter_0959272
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant2/checkpoints/iter_0955200
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant2/checkpoints/iter_0957600
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant2/checkpoints/iter_0959272
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant3/checkpoints/iter_0955200
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant3/checkpoints/iter_0957600
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_dominant3/checkpoints/iter_0959272
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0955200
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0957600
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual1/checkpoints/iter_0959272
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual2/checkpoints/iter_0955200
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual2/checkpoints/iter_0957600
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual2/checkpoints/iter_0959272
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual3/checkpoints/iter_0955200
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual3/checkpoints/iter_0957600
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_multilingual3/checkpoints/iter_0959272
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0955200
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0957600
+  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal50b_no-change/checkpoints/iter_0959272

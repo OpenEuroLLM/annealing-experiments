@@ -1,0 +1,35 @@
+[warn] input not found: prelude/evals/reasoning/300bt
+[info] loaded 2031 rows from prelude/evals/dclm-core-22/300bt/results.csv
+[info] loaded 7634 rows from prelude/evals/oellm-multilingual-eu/300bt/results.csv
+[info] supergroup 'reasoning': kept 706 of 9665 rows, 39 of 419 evaluated tasks
+[info] models: ['baby_9b_dense_anneal300b_multilingual1_dominant1', 'baby_9b_dense_anneal300b_multilingual1_dominant2', 'baby_9b_dense_anneal300b_no-change', 'baby_9b_dense_before-annealing']
+[info] origin checkpoint: /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312 (run=baby_9b_dense_before-annealing, step=953312)
+[info] families to plot: 3 of 3
+                                                 run    step     score
+0   baby_9b_dense_anneal300b_multilingual1_dominant1  955200 -0.355952
+1   baby_9b_dense_anneal300b_multilingual1_dominant1  957600 -0.093454
+2   baby_9b_dense_anneal300b_multilingual1_dominant1  960000  0.495130
+3   baby_9b_dense_anneal300b_multilingual1_dominant1  962400  0.138564
+4   baby_9b_dense_anneal300b_multilingual1_dominant1  964800  0.027899
+5   baby_9b_dense_anneal300b_multilingual1_dominant1  966260  0.000930
+6   baby_9b_dense_anneal300b_multilingual1_dominant1  967200  0.247558
+7   baby_9b_dense_anneal300b_multilingual1_dominant1  969600  0.335960
+8   baby_9b_dense_anneal300b_multilingual1_dominant1  986400  0.723715
+9   baby_9b_dense_anneal300b_multilingual1_dominant1  989075  0.617926
+10  baby_9b_dense_anneal300b_multilingual1_dominant2  955200 -0.725945
+11  baby_9b_dense_anneal300b_multilingual1_dominant2  957600  0.456610
+12  baby_9b_dense_anneal300b_multilingual1_dominant2  960000 -0.335985
+13  baby_9b_dense_anneal300b_multilingual1_dominant2  962400 -0.322714
+14  baby_9b_dense_anneal300b_multilingual1_dominant2  964800 -1.066748
+15  baby_9b_dense_anneal300b_multilingual1_dominant2  967200  0.510643
+16  baby_9b_dense_anneal300b_multilingual1_dominant2  969600  1.415525
+17  baby_9b_dense_anneal300b_multilingual1_dominant2  986400  0.986396
+18  baby_9b_dense_anneal300b_multilingual1_dominant2  989075  0.933702
+19                baby_9b_dense_anneal300b_no-change  989075 -1.656057
+20                    baby_9b_dense_before-annealing  953312 -2.261677
+[info] wrote 5 plot(s) to prelude/groups1/300bt/reasoning
+  prelude/groups1/300bt/reasoning/global_mgsm.png
+  prelude/groups1/300bt/reasoning/mgsm_native_cot.png
+  prelude/groups1/300bt/reasoning/polymath.png
+  prelude/groups1/300bt/reasoning/overview_grid.png
+  prelude/groups1/300bt/reasoning/macro_average_zscore.png

@@ -1,0 +1,48 @@
+[warn] input not found: prelude/evals/reasoning/300bt
+[info] loaded 2031 rows from prelude/evals/dclm-core-22/300bt/results.csv
+[info] loaded 7634 rows from prelude/evals/oellm-multilingual-eu/300bt/results.csv
+[info] supergroup 'english': kept 2154 of 9665 rows, 24 of 419 evaluated tasks
+[info] models: ['baby_9b_dense_anneal100b_english1', 'baby_9b_dense_anneal100b_english2', 'baby_9b_dense_anneal100b_english3', 'baby_9b_dense_anneal100b_multilingual1', 'baby_9b_dense_anneal100b_multilingual2', 'baby_9b_dense_anneal100b_multilingual3', 'baby_9b_dense_anneal100b_no-change', 'baby_9b_dense_anneal20b_english1', 'baby_9b_dense_anneal20b_english2', 'baby_9b_dense_anneal20b_english3', 'baby_9b_dense_anneal20b_multilingual1', 'baby_9b_dense_anneal20b_multilingual2', 'baby_9b_dense_anneal20b_multilingual3', 'baby_9b_dense_anneal20b_no-change', 'baby_9b_dense_anneal300b_multilingual1_dominant1', 'baby_9b_dense_anneal300b_multilingual1_dominant2', 'baby_9b_dense_anneal300b_no-change', 'baby_9b_dense_anneal50b_english1', 'baby_9b_dense_anneal50b_english2', 'baby_9b_dense_anneal50b_english3', 'baby_9b_dense_anneal50b_multilingual1', 'baby_9b_dense_anneal50b_multilingual2', 'baby_9b_dense_anneal50b_multilingual3', 'baby_9b_dense_anneal50b_no-change', 'baby_9b_dense_before-annealing']
+[info] origin checkpoint: /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312 (run=baby_9b_dense_before-annealing, step=953312)
+[info] families to plot: 24 of 24
+                                       run    step     score
+0        baby_9b_dense_anneal100b_english1  955200 -0.671484
+1        baby_9b_dense_anneal100b_english1  957600 -0.245338
+2        baby_9b_dense_anneal100b_english1  960000  0.336871
+3        baby_9b_dense_anneal100b_english1  962400  0.323309
+4        baby_9b_dense_anneal100b_english1  964800  0.600088
+..                                     ...     ...       ...
+103  baby_9b_dense_anneal50b_multilingual3  959272 -0.018930
+104      baby_9b_dense_anneal50b_no-change  955200 -0.413439
+105      baby_9b_dense_anneal50b_no-change  957600 -0.111717
+106      baby_9b_dense_anneal50b_no-change  959272  0.247571
+107         baby_9b_dense_before-annealing  953312 -1.475122
+
+[108 rows x 3 columns]
+[info] wrote 26 plot(s) to prelude/groups1/300bt/english
+  prelude/groups1/300bt/english/belebele.png
+  prelude/groups1/300bt/english/dclm_core_22_arc_challenge.png
+  prelude/groups1/300bt/english/dclm_core_22_arc_easy.png
+  prelude/groups1/300bt/english/dclm_core_22_bigbench_cs_algorithms_generate_until.png
+  prelude/groups1/300bt/english/dclm_core_22_bigbench_dyck_languages_generate_until.png
+  prelude/groups1/300bt/english/dclm_core_22_bigbench_language_identification_multiple_choice.png
+  prelude/groups1/300bt/english/dclm_core_22_bigbench_operators_generate_until.png
+  prelude/groups1/300bt/english/dclm_core_22_bigbench_qa_wikidata_generate_until.png
+  prelude/groups1/300bt/english/dclm_core_22_bigbench_repeat_copy_logic_generate_until.png
+  prelude/groups1/300bt/english/dclm_core_22_boolq.png
+  prelude/groups1/300bt/english/dclm_core_22_commonsense_qa.png
+  prelude/groups1/300bt/english/dclm_core_22_copa.png
+  prelude/groups1/300bt/english/dclm_core_22_coqa.png
+  prelude/groups1/300bt/english/dclm_core_22_hellaswag.png
+  prelude/groups1/300bt/english/dclm_core_22_jeopardy.png
+  prelude/groups1/300bt/english/dclm_core_22_lambada_openai.png
+  prelude/groups1/300bt/english/dclm_core_22_openbookqa.png
+  prelude/groups1/300bt/english/dclm_core_22_piqa.png
+  prelude/groups1/300bt/english/dclm_core_22_winogrande.png
+  prelude/groups1/300bt/english/global_mmlu_full.png
+  prelude/groups1/300bt/english/global_piqa_completions.png
+  prelude/groups1/300bt/english/global_piqa_prompted.png
+  prelude/groups1/300bt/english/multiblimp.png
+  prelude/groups1/300bt/english/xcsqa.png
+  prelude/groups1/300bt/english/overview_grid.png
+  prelude/groups1/300bt/english/macro_average_zscore.png
