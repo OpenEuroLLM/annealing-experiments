@@ -147,10 +147,11 @@ global_piqa_prompted_srp_cyrl,multilingual
 global_piqa_prompted_swe_latn,multilingual
 global_piqa_prompted_tur_latn,multilingual
 global_piqa_prompted_ukr_cyrl,multilingual
-hellaswag,english
+gsm8k,reasoning
 hellaswag_ca,multilingual
 hellaswag_da,multilingual
 hellaswag_de,multilingual
+hellaswag,english
 hellaswag_es,multilingual
 hellaswag_eu,multilingual
 hellaswag_fr,multilingual
@@ -179,6 +180,7 @@ include_base_44_hungarian,multilingual
 include_base_44_italian,multilingual
 include_base_44_lithuanian,multilingual
 include_base_44_north macedonian,multilingual
+include_base_44_north_macedonian,multilingual
 include_base_44_polish,multilingual
 include_base_44_portuguese,multilingual
 include_base_44_serbian,multilingual
@@ -187,6 +189,7 @@ include_base_44_turkish,multilingual
 include_base_44_ukrainian,multilingual
 jeopardy,english
 lambada_openai,english
+mbpp,reasoning
 mgsm_native_cot_de,reasoning
 mgsm_native_cot_en,reasoning
 mgsm_native_cot_es,reasoning
@@ -299,8 +302,6 @@ polymath_pt_high,reasoning
 polymath_pt_low,reasoning
 polymath_pt_medium,reasoning
 polymath_pt_top,reasoning
-gsm8k,reasoning
-mbpp,reasoning
 sib200_als_Latn,null
 sib200_bos_Latn,null
 sib200_bul_Cyrl,null
