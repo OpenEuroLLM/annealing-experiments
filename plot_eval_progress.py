@@ -1301,7 +1301,9 @@ def _plot_by_language(
     fig.tight_layout(rect=(0, 0.06, 1, 0.97))
 
     safe = re.sub(r"[^A-Za-z0-9_.\-\u2192\[\]]+", "_", fam_title)
-    png_path = out_dir / f"by-lang/{safe}__bylang.png"
+    bylang_dir = Path(f"{out_dir}/by-lang")
+    bylang_dir.mkdir(parents=True, exist_ok=True)
+    png_path = f"{bylang_dir}/{safe}__bylang.png"
     fig.savefig(png_path, dpi=dpi)
     if pdf:
         fig.savefig(out_dir / f"{safe}__bylang.pdf")
