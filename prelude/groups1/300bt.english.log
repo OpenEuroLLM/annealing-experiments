@@ -1,7 +1,11 @@
 [warn] input not found: prelude/evals/reasoning/300bt
+[info] loaded 38 rows from prelude/evals/dclm-core-22/0bt/results.csv
+[info] loaded 328 rows from prelude/evals/oellm-multilingual-eu/0bt/results.csv
+[info] loaded 2 rows from prelude/evals/reasoning/0bt/results.csv
 [info] loaded 2031 rows from prelude/evals/dclm-core-22/300bt/results.csv
 [info] loaded 7634 rows from prelude/evals/oellm-multilingual-eu/300bt/results.csv
-[info] supergroup 'english': kept 2154 of 9665 rows, 24 of 419 evaluated tasks
+[info] metric filter: dropped 36 row(s) whose metric_name is not the metric declared in FAMILIES
+[info] supergroup 'english': kept 2154 of 9667 rows, 24 of 421 evaluated tasks
 [info] models: ['baby_9b_dense_anneal100b_english1', 'baby_9b_dense_anneal100b_english2', 'baby_9b_dense_anneal100b_english3', 'baby_9b_dense_anneal100b_multilingual1', 'baby_9b_dense_anneal100b_multilingual2', 'baby_9b_dense_anneal100b_multilingual3', 'baby_9b_dense_anneal100b_no-change', 'baby_9b_dense_anneal20b_english1', 'baby_9b_dense_anneal20b_english2', 'baby_9b_dense_anneal20b_english3', 'baby_9b_dense_anneal20b_multilingual1', 'baby_9b_dense_anneal20b_multilingual2', 'baby_9b_dense_anneal20b_multilingual3', 'baby_9b_dense_anneal20b_no-change', 'baby_9b_dense_anneal300b_multilingual1_dominant1', 'baby_9b_dense_anneal300b_multilingual1_dominant2', 'baby_9b_dense_anneal300b_no-change', 'baby_9b_dense_anneal50b_english1', 'baby_9b_dense_anneal50b_english2', 'baby_9b_dense_anneal50b_english3', 'baby_9b_dense_anneal50b_multilingual1', 'baby_9b_dense_anneal50b_multilingual2', 'baby_9b_dense_anneal50b_multilingual3', 'baby_9b_dense_anneal50b_no-change', 'baby_9b_dense_before-annealing']
 [info] origin checkpoint: /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312 (run=baby_9b_dense_before-annealing, step=953312)
 [info] families to plot: 24 of 24

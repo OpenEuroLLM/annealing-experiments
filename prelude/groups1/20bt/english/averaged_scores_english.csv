@@ -1,0 +1,16 @@
+run,step,score
+baby_9b_dense_anneal20b_dominant1,955200,0.15398426779300065
+baby_9b_dense_anneal20b_dominant1,955696,0.4625971971461576
+baby_9b_dense_anneal20b_dominant2,955200,0.24373955563174435
+baby_9b_dense_anneal20b_dominant2,955696,0.45326509001742077
+baby_9b_dense_anneal20b_dominant3,955200,0.010868034192344622
+baby_9b_dense_anneal20b_dominant3,955696,0.29126893837036766
+baby_9b_dense_anneal20b_multilingual1,955200,-0.05328905567304845
+baby_9b_dense_anneal20b_multilingual1,955696,0.1879600170840234
+baby_9b_dense_anneal20b_multilingual2,955200,-0.2452769342898549
+baby_9b_dense_anneal20b_multilingual2,955696,0.2983601808897152
+baby_9b_dense_anneal20b_multilingual3,955200,-0.08097296802589701
+baby_9b_dense_anneal20b_multilingual3,955696,-0.0905498805453651
+baby_9b_dense_anneal20b_no-change,955200,-0.06001275887360924
+baby_9b_dense_anneal20b_no-change,955696,0.10874888108220633
+baby_9b_dense_before-annealing,953312,-1.5257836329542986

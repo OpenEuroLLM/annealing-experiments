@@ -1,3 +1,6 @@
+[info] loaded 38 rows from prelude/evals/dclm-core-22/0bt/results.csv
+[info] loaded 328 rows from prelude/evals/oellm-multilingual-eu/0bt/results.csv
+[info] loaded 2 rows from prelude/evals/reasoning/0bt/results.csv
 [info] loaded 114 rows from prelude/evals/dclm-core-22/100bt/baseline/results.csv
 [info] loaded 342 rows from prelude/evals/dclm-core-22/100bt/dominant/results.csv
 [info] loaded 342 rows from prelude/evals/dclm-core-22/100bt/multilingual/results.csv
@@ -7,50 +10,80 @@
 [info] loaded 12 rows from prelude/evals/reasoning/100bt/baseline/results.csv
 [info] loaded 36 rows from prelude/evals/reasoning/100bt/dominant/results.csv
 [info] loaded 36 rows from prelude/evals/reasoning/100bt/multilingual/results.csv
-[info] metric filter: dropped 1512 row(s) whose metric_name is not the metric declared in FAMILIES
+[info] metric filter: dropped 1548 row(s) whose metric_name is not the metric declared in FAMILIES
 [warn] 36 task(s) report no row with the metric declared in FAMILIES and were dropped entirely (families: sib200); check the 'metric' entries in FAMILIES
-[info] supergroup 'english': kept 1050 of 13146 rows, 24 of 312 evaluated tasks
-[info] models: ['baby_9b_dense_anneal100b_dominant1', 'baby_9b_dense_anneal100b_dominant2', 'baby_9b_dense_anneal100b_dominant3', 'baby_9b_dense_anneal100b_multilingual1', 'baby_9b_dense_anneal100b_multilingual2', 'baby_9b_dense_anneal100b_multilingual3', 'baby_9b_dense_anneal100b_no-change']
-[error] --origin_checkpoint: '/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312' is not among the evaluated models. Evaluated model_names:
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0965232
+[info] supergroup 'english': kept 1075 of 13459 rows, 24 of 313 evaluated tasks
+[info] models: ['baby_9b_dense_anneal100b_dominant1', 'baby_9b_dense_anneal100b_dominant2', 'baby_9b_dense_anneal100b_dominant3', 'baby_9b_dense_anneal100b_multilingual1', 'baby_9b_dense_anneal100b_multilingual2', 'baby_9b_dense_anneal100b_multilingual3', 'baby_9b_dense_anneal100b_no-change', 'baby_9b_dense_before-annealing']
+[info] origin checkpoint: /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312 (run=baby_9b_dense_before-annealing, step=953312)
+[info] families to plot: 24 of 24
+                                       run    step     score
+0       baby_9b_dense_anneal100b_dominant1  955200 -0.754795
+1       baby_9b_dense_anneal100b_dominant1  957600 -0.277312
+2       baby_9b_dense_anneal100b_dominant1  960000  0.231467
+3       baby_9b_dense_anneal100b_dominant1  962400  0.194903
+4       baby_9b_dense_anneal100b_dominant1  964800  0.563506
+5       baby_9b_dense_anneal100b_dominant1  965232  0.568431
+6       baby_9b_dense_anneal100b_dominant2  955200 -0.651490
+7       baby_9b_dense_anneal100b_dominant2  957600  0.278270
+8       baby_9b_dense_anneal100b_dominant2  960000  0.473277
+9       baby_9b_dense_anneal100b_dominant2  962400  0.600150
+10      baby_9b_dense_anneal100b_dominant2  964800  0.615985
+11      baby_9b_dense_anneal100b_dominant2  965232  0.665199
+12      baby_9b_dense_anneal100b_dominant3  955200 -0.861295
+13      baby_9b_dense_anneal100b_dominant3  957600 -0.560874
+14      baby_9b_dense_anneal100b_dominant3  960000 -0.238756
+15      baby_9b_dense_anneal100b_dominant3  962400  0.344151
+16      baby_9b_dense_anneal100b_dominant3  964800  0.436514
+17      baby_9b_dense_anneal100b_dominant3  965232  0.416641
+18  baby_9b_dense_anneal100b_multilingual1  955200 -0.861030
+19  baby_9b_dense_anneal100b_multilingual1  957600 -0.308143
+20  baby_9b_dense_anneal100b_multilingual1  960000 -0.010250
+21  baby_9b_dense_anneal100b_multilingual1  962400  0.216935
+22  baby_9b_dense_anneal100b_multilingual1  964800  0.532671
+23  baby_9b_dense_anneal100b_multilingual1  965232  0.680104
+24  baby_9b_dense_anneal100b_multilingual2  955200 -0.741376
+25  baby_9b_dense_anneal100b_multilingual2  957600 -0.149780
+26  baby_9b_dense_anneal100b_multilingual2  960000 -0.237794
+27  baby_9b_dense_anneal100b_multilingual2  962400  0.118755
+28  baby_9b_dense_anneal100b_multilingual2  964800  0.266137
+29  baby_9b_dense_anneal100b_multilingual2  965232  0.204021
+30  baby_9b_dense_anneal100b_multilingual3  955200 -0.849165
+31  baby_9b_dense_anneal100b_multilingual3  957600 -0.403053
+32  baby_9b_dense_anneal100b_multilingual3  960000  0.006747
+33  baby_9b_dense_anneal100b_multilingual3  962400  0.332019
+34  baby_9b_dense_anneal100b_multilingual3  964800  0.308176
+35  baby_9b_dense_anneal100b_multilingual3  965232  0.446832
+36      baby_9b_dense_anneal100b_no-change  955200 -0.553754
+37      baby_9b_dense_anneal100b_no-change  957600 -0.399895
+38      baby_9b_dense_anneal100b_no-change  960000 -0.028899
+39      baby_9b_dense_anneal100b_no-change  962400  0.140837
+40      baby_9b_dense_anneal100b_no-change  964800  0.360882
+41      baby_9b_dense_anneal100b_no-change  965232  0.337897
+42          baby_9b_dense_before-annealing  953312 -1.452848
+[info] wrote 26 plot(s) to prelude/groups1/100bt/english
+  prelude/groups1/100bt/english/belebele.png
+  prelude/groups1/100bt/english/dclm_core_22_arc_challenge.png
+  prelude/groups1/100bt/english/dclm_core_22_arc_easy.png
+  prelude/groups1/100bt/english/dclm_core_22_bigbench_cs_algorithms_generate_until.png
+  prelude/groups1/100bt/english/dclm_core_22_bigbench_dyck_languages_generate_until.png
+  prelude/groups1/100bt/english/dclm_core_22_bigbench_language_identification_multiple_choice.png
+  prelude/groups1/100bt/english/dclm_core_22_bigbench_operators_generate_until.png
+  prelude/groups1/100bt/english/dclm_core_22_bigbench_qa_wikidata_generate_until.png
+  prelude/groups1/100bt/english/dclm_core_22_bigbench_repeat_copy_logic_generate_until.png
+  prelude/groups1/100bt/english/dclm_core_22_boolq.png
+  prelude/groups1/100bt/english/dclm_core_22_commonsense_qa.png
+  prelude/groups1/100bt/english/dclm_core_22_copa.png
+  prelude/groups1/100bt/english/dclm_core_22_coqa.png
+  prelude/groups1/100bt/english/dclm_core_22_hellaswag.png
+  prelude/groups1/100bt/english/dclm_core_22_jeopardy.png
+  prelude/groups1/100bt/english/dclm_core_22_lambada_openai.png
+  prelude/groups1/100bt/english/dclm_core_22_openbookqa.png
+  prelude/groups1/100bt/english/dclm_core_22_piqa.png
+  prelude/groups1/100bt/english/dclm_core_22_winogrande.png
+  prelude/groups1/100bt/english/global_mmlu_full.png
+  prelude/groups1/100bt/english/global_piqa_completions.png
+  prelude/groups1/100bt/english/global_piqa_prompted.png
+  prelude/groups1/100bt/english/multiblimp.png
+  prelude/groups1/100bt/english/xcsqa.png
+  prelude/groups1/100bt/english/overview_grid.png
+  prelude/groups1/100bt/english/macro_average_zscore.png

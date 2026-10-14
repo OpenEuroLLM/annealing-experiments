@@ -1,3 +1,6 @@
+[info] loaded 38 rows from prelude/evals/dclm-core-22/0bt/results.csv
+[info] loaded 328 rows from prelude/evals/oellm-multilingual-eu/0bt/results.csv
+[info] loaded 2 rows from prelude/evals/reasoning/0bt/results.csv
 [info] loaded 38 rows from prelude/evals/dclm-core-22/20bt/baseline/results.csv
 [info] loaded 96 rows from prelude/evals/dclm-core-22/20bt/dominant/results.csv
 [info] loaded 112 rows from prelude/evals/dclm-core-22/20bt/multilingual/results.csv
@@ -7,22 +10,52 @@
 [info] loaded 4 rows from prelude/evals/reasoning/20bt/baseline/results.csv
 [info] loaded 12 rows from prelude/evals/reasoning/20bt/dominant/results.csv
 [info] loaded 12 rows from prelude/evals/reasoning/20bt/multilingual/results.csv
-[info] metric filter: dropped 504 row(s) whose metric_name is not the metric declared in FAMILIES
+[info] metric filter: dropped 540 row(s) whose metric_name is not the metric declared in FAMILIES
 [warn] 36 task(s) report no row with the metric declared in FAMILIES and were dropped entirely (families: sib200); check the 'metric' entries in FAMILIES
-[info] supergroup 'english': kept 330 of 4360 rows, 24 of 312 evaluated tasks
-[info] models: ['baby_9b_dense_anneal20b_dominant1', 'baby_9b_dense_anneal20b_dominant2', 'baby_9b_dense_anneal20b_dominant3', 'baby_9b_dense_anneal20b_multilingual1', 'baby_9b_dense_anneal20b_multilingual2', 'baby_9b_dense_anneal20b_multilingual3', 'baby_9b_dense_anneal20b_no-change']
-[error] --origin_checkpoint: '/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312' is not among the evaluated models. Evaluated model_names:
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant1/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant1/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant2/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant2/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant3/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant3/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual1/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual1/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual2/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual2/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual3/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual3/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955696
+[info] supergroup 'english': kept 355 of 4673 rows, 24 of 313 evaluated tasks
+[info] models: ['baby_9b_dense_anneal20b_dominant1', 'baby_9b_dense_anneal20b_dominant2', 'baby_9b_dense_anneal20b_dominant3', 'baby_9b_dense_anneal20b_multilingual1', 'baby_9b_dense_anneal20b_multilingual2', 'baby_9b_dense_anneal20b_multilingual3', 'baby_9b_dense_anneal20b_no-change', 'baby_9b_dense_before-annealing']
+[info] origin checkpoint: /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312 (run=baby_9b_dense_before-annealing, step=953312)
+[info] families to plot: 24 of 24
+                                      run    step     score
+0       baby_9b_dense_anneal20b_dominant1  955200  0.153984
+1       baby_9b_dense_anneal20b_dominant1  955696  0.462597
+2       baby_9b_dense_anneal20b_dominant2  955200  0.243740
+3       baby_9b_dense_anneal20b_dominant2  955696  0.453265
+4       baby_9b_dense_anneal20b_dominant3  955200  0.010868
+5       baby_9b_dense_anneal20b_dominant3  955696  0.291269
+6   baby_9b_dense_anneal20b_multilingual1  955200 -0.053289
+7   baby_9b_dense_anneal20b_multilingual1  955696  0.187960
+8   baby_9b_dense_anneal20b_multilingual2  955200 -0.245277
+9   baby_9b_dense_anneal20b_multilingual2  955696  0.298360
+10  baby_9b_dense_anneal20b_multilingual3  955200 -0.080973
+11  baby_9b_dense_anneal20b_multilingual3  955696 -0.090550
+12      baby_9b_dense_anneal20b_no-change  955200 -0.060013
+13      baby_9b_dense_anneal20b_no-change  955696  0.108749
+14         baby_9b_dense_before-annealing  953312 -1.525784
+[info] wrote 26 plot(s) to prelude/groups1/20bt/english
+  prelude/groups1/20bt/english/belebele.png
+  prelude/groups1/20bt/english/dclm_core_22_arc_challenge.png
+  prelude/groups1/20bt/english/dclm_core_22_arc_easy.png
+  prelude/groups1/20bt/english/dclm_core_22_bigbench_cs_algorithms_generate_until.png
+  prelude/groups1/20bt/english/dclm_core_22_bigbench_dyck_languages_generate_until.png
+  prelude/groups1/20bt/english/dclm_core_22_bigbench_language_identification_multiple_choice.png
+  prelude/groups1/20bt/english/dclm_core_22_bigbench_operators_generate_until.png
+  prelude/groups1/20bt/english/dclm_core_22_bigbench_qa_wikidata_generate_until.png
+  prelude/groups1/20bt/english/dclm_core_22_bigbench_repeat_copy_logic_generate_until.png
+  prelude/groups1/20bt/english/dclm_core_22_boolq.png
+  prelude/groups1/20bt/english/dclm_core_22_commonsense_qa.png
+  prelude/groups1/20bt/english/dclm_core_22_copa.png
+  prelude/groups1/20bt/english/dclm_core_22_coqa.png
+  prelude/groups1/20bt/english/dclm_core_22_hellaswag.png
+  prelude/groups1/20bt/english/dclm_core_22_jeopardy.png
+  prelude/groups1/20bt/english/dclm_core_22_lambada_openai.png
+  prelude/groups1/20bt/english/dclm_core_22_openbookqa.png
+  prelude/groups1/20bt/english/dclm_core_22_piqa.png
+  prelude/groups1/20bt/english/dclm_core_22_winogrande.png
+  prelude/groups1/20bt/english/global_mmlu_full.png
+  prelude/groups1/20bt/english/global_piqa_completions.png
+  prelude/groups1/20bt/english/global_piqa_prompted.png
+  prelude/groups1/20bt/english/multiblimp.png
+  prelude/groups1/20bt/english/xcsqa.png
+  prelude/groups1/20bt/english/overview_grid.png
+  prelude/groups1/20bt/english/macro_average_zscore.png

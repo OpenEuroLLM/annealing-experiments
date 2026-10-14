@@ -1,3 +1,6 @@
+[info] loaded 38 rows from prelude/evals/dclm-core-22/0bt/results.csv
+[info] loaded 328 rows from prelude/evals/oellm-multilingual-eu/0bt/results.csv
+[info] loaded 2 rows from prelude/evals/reasoning/0bt/results.csv
 [info] loaded 38 rows from prelude/evals/dclm-core-22/20bt/baseline/results.csv
 [info] loaded 96 rows from prelude/evals/dclm-core-22/20bt/dominant/results.csv
 [info] loaded 112 rows from prelude/evals/dclm-core-22/20bt/multilingual/results.csv
@@ -7,22 +10,33 @@
 [info] loaded 4 rows from prelude/evals/reasoning/20bt/baseline/results.csv
 [info] loaded 12 rows from prelude/evals/reasoning/20bt/dominant/results.csv
 [info] loaded 12 rows from prelude/evals/reasoning/20bt/multilingual/results.csv
-[info] metric filter: dropped 504 row(s) whose metric_name is not the metric declared in FAMILIES
+[info] metric filter: dropped 540 row(s) whose metric_name is not the metric declared in FAMILIES
 [warn] 36 task(s) report no row with the metric declared in FAMILIES and were dropped entirely (families: sib200); check the 'metric' entries in FAMILIES
-[info] supergroup 'reasoning': kept 573 of 4360 rows, 41 of 312 evaluated tasks
-[info] models: ['baby_9b_dense_anneal20b_dominant1', 'baby_9b_dense_anneal20b_dominant2', 'baby_9b_dense_anneal20b_dominant3', 'baby_9b_dense_anneal20b_multilingual1', 'baby_9b_dense_anneal20b_multilingual2', 'baby_9b_dense_anneal20b_multilingual3', 'baby_9b_dense_anneal20b_no-change']
-[error] --origin_checkpoint: '/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312' is not among the evaluated models. Evaluated model_names:
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant1/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant1/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant2/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant2/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant3/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_dominant3/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual1/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual1/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual2/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual2/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual3/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_multilingual3/checkpoints/iter_0955696
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal20b_no-change/checkpoints/iter_0955696
+[info] supergroup 'reasoning': kept 614 of 4673 rows, 41 of 313 evaluated tasks
+[info] models: ['baby_9b_dense_anneal20b_dominant1', 'baby_9b_dense_anneal20b_dominant2', 'baby_9b_dense_anneal20b_dominant3', 'baby_9b_dense_anneal20b_multilingual1', 'baby_9b_dense_anneal20b_multilingual2', 'baby_9b_dense_anneal20b_multilingual3', 'baby_9b_dense_anneal20b_no-change', 'baby_9b_dense_before-annealing']
+[info] origin checkpoint: /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312 (run=baby_9b_dense_before-annealing, step=953312)
+[info] families to plot: 5 of 5
+                                      run    step     score
+0       baby_9b_dense_anneal20b_dominant1  955200  1.123821
+1       baby_9b_dense_anneal20b_dominant1  955696  1.247504
+2       baby_9b_dense_anneal20b_dominant2  955200  1.292737
+3       baby_9b_dense_anneal20b_dominant2  955696  1.236584
+4       baby_9b_dense_anneal20b_dominant3  955200  1.160754
+5       baby_9b_dense_anneal20b_dominant3  955696  1.187132
+6   baby_9b_dense_anneal20b_multilingual1  955200 -0.697510
+7   baby_9b_dense_anneal20b_multilingual1  955696 -0.681742
+8   baby_9b_dense_anneal20b_multilingual2  955200 -0.844164
+9   baby_9b_dense_anneal20b_multilingual2  955696 -0.768187
+10  baby_9b_dense_anneal20b_multilingual3  955200 -0.835849
+11  baby_9b_dense_anneal20b_multilingual3  955696 -0.778163
+12      baby_9b_dense_anneal20b_no-change  955200 -0.757611
+13      baby_9b_dense_anneal20b_no-change  955696 -0.813728
+14         baby_9b_dense_before-annealing  953312 -1.071578
+[info] wrote 7 plot(s) to prelude/groups1/20bt/reasoning
+  prelude/groups1/20bt/reasoning/global_mgsm.png
+  prelude/groups1/20bt/reasoning/mgsm_native_cot.png
+  prelude/groups1/20bt/reasoning/polymath.png
+  prelude/groups1/20bt/reasoning/reasoning_gsm8k.png
+  prelude/groups1/20bt/reasoning/reasoning_mbpp.png
+  prelude/groups1/20bt/reasoning/overview_grid.png
+  prelude/groups1/20bt/reasoning/macro_average_zscore.png

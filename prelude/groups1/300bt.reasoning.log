@@ -1,10 +1,14 @@
 [warn] input not found: prelude/evals/reasoning/300bt
+[info] loaded 38 rows from prelude/evals/dclm-core-22/0bt/results.csv
+[info] loaded 328 rows from prelude/evals/oellm-multilingual-eu/0bt/results.csv
+[info] loaded 2 rows from prelude/evals/reasoning/0bt/results.csv
 [info] loaded 2031 rows from prelude/evals/dclm-core-22/300bt/results.csv
 [info] loaded 7634 rows from prelude/evals/oellm-multilingual-eu/300bt/results.csv
-[info] supergroup 'reasoning': kept 706 of 9665 rows, 39 of 419 evaluated tasks
+[info] metric filter: dropped 36 row(s) whose metric_name is not the metric declared in FAMILIES
+[info] supergroup 'reasoning': kept 708 of 9667 rows, 41 of 421 evaluated tasks
 [info] models: ['baby_9b_dense_anneal300b_multilingual1_dominant1', 'baby_9b_dense_anneal300b_multilingual1_dominant2', 'baby_9b_dense_anneal300b_no-change', 'baby_9b_dense_before-annealing']
 [info] origin checkpoint: /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312 (run=baby_9b_dense_before-annealing, step=953312)
-[info] families to plot: 3 of 3
+[info] families to plot: 5 of 5
                                                  run    step     score
 0   baby_9b_dense_anneal300b_multilingual1_dominant1  955200 -0.355952
 1   baby_9b_dense_anneal300b_multilingual1_dominant1  957600 -0.093454
@@ -26,10 +30,12 @@
 17  baby_9b_dense_anneal300b_multilingual1_dominant2  986400  0.986396
 18  baby_9b_dense_anneal300b_multilingual1_dominant2  989075  0.933702
 19                baby_9b_dense_anneal300b_no-change  989075 -1.656057
-20                    baby_9b_dense_before-annealing  953312 -2.261677
-[info] wrote 5 plot(s) to prelude/groups1/300bt/reasoning
+20                    baby_9b_dense_before-annealing  953312 -1.357006
+[info] wrote 7 plot(s) to prelude/groups1/300bt/reasoning
   prelude/groups1/300bt/reasoning/global_mgsm.png
   prelude/groups1/300bt/reasoning/mgsm_native_cot.png
   prelude/groups1/300bt/reasoning/polymath.png
+  prelude/groups1/300bt/reasoning/reasoning_gsm8k.png
+  prelude/groups1/300bt/reasoning/reasoning_mbpp.png
   prelude/groups1/300bt/reasoning/overview_grid.png
   prelude/groups1/300bt/reasoning/macro_average_zscore.png

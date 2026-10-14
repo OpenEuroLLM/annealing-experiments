@@ -1,3 +1,6 @@
+[info] loaded 38 rows from prelude/evals/dclm-core-22/0bt/results.csv
+[info] loaded 328 rows from prelude/evals/oellm-multilingual-eu/0bt/results.csv
+[info] loaded 2 rows from prelude/evals/reasoning/0bt/results.csv
 [info] loaded 114 rows from prelude/evals/dclm-core-22/100bt/baseline/results.csv
 [info] loaded 342 rows from prelude/evals/dclm-core-22/100bt/dominant/results.csv
 [info] loaded 342 rows from prelude/evals/dclm-core-22/100bt/multilingual/results.csv
@@ -7,50 +10,67 @@
 [info] loaded 12 rows from prelude/evals/reasoning/100bt/baseline/results.csv
 [info] loaded 36 rows from prelude/evals/reasoning/100bt/dominant/results.csv
 [info] loaded 36 rows from prelude/evals/reasoning/100bt/multilingual/results.csv
-[info] metric filter: dropped 1512 row(s) whose metric_name is not the metric declared in FAMILIES
+[info] metric filter: dropped 1548 row(s) whose metric_name is not the metric declared in FAMILIES
 [warn] 36 task(s) report no row with the metric declared in FAMILIES and were dropped entirely (families: sib200); check the 'metric' entries in FAMILIES
-[info] supergroup 'multilingual': kept 10374 of 13146 rows, 247 of 312 evaluated tasks
-[info] models: ['baby_9b_dense_anneal100b_dominant1', 'baby_9b_dense_anneal100b_dominant2', 'baby_9b_dense_anneal100b_dominant3', 'baby_9b_dense_anneal100b_multilingual1', 'baby_9b_dense_anneal100b_multilingual2', 'baby_9b_dense_anneal100b_multilingual3', 'baby_9b_dense_anneal100b_no-change']
-[error] --origin_checkpoint: '/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312' is not among the evaluated models. Evaluated model_names:
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant1/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant2/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_dominant3/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual1/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual2/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_multilingual3/checkpoints/iter_0965232
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0955200
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0957600
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0960000
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0962400
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0964800
-  /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal100b_no-change/checkpoints/iter_0965232
+[info] supergroup 'multilingual': kept 10621 of 13459 rows, 248 of 313 evaluated tasks
+[info] models: ['baby_9b_dense_anneal100b_dominant1', 'baby_9b_dense_anneal100b_dominant2', 'baby_9b_dense_anneal100b_dominant3', 'baby_9b_dense_anneal100b_multilingual1', 'baby_9b_dense_anneal100b_multilingual2', 'baby_9b_dense_anneal100b_multilingual3', 'baby_9b_dense_anneal100b_no-change', 'baby_9b_dense_before-annealing']
+[info] origin checkpoint: /scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_before-annealing/checkpoints/iter_0953312 (run=baby_9b_dense_before-annealing, step=953312)
+[info] families to plot: 11 of 11
+                                       run    step     score
+0       baby_9b_dense_anneal100b_dominant1  955200 -0.819240
+1       baby_9b_dense_anneal100b_dominant1  957600 -0.061527
+2       baby_9b_dense_anneal100b_dominant1  960000  0.238106
+3       baby_9b_dense_anneal100b_dominant1  962400  0.511161
+4       baby_9b_dense_anneal100b_dominant1  964800  0.546577
+5       baby_9b_dense_anneal100b_dominant1  965232  0.565454
+6       baby_9b_dense_anneal100b_dominant2  955200 -0.971056
+7       baby_9b_dense_anneal100b_dominant2  957600 -0.031399
+8       baby_9b_dense_anneal100b_dominant2  960000  0.205048
+9       baby_9b_dense_anneal100b_dominant2  962400  0.636492
+10      baby_9b_dense_anneal100b_dominant2  964800  0.755485
+11      baby_9b_dense_anneal100b_dominant2  965232  0.754991
+12      baby_9b_dense_anneal100b_dominant3  955200 -0.997341
+13      baby_9b_dense_anneal100b_dominant3  957600 -0.068010
+14      baby_9b_dense_anneal100b_dominant3  960000  0.562781
+15      baby_9b_dense_anneal100b_dominant3  962400  0.907106
+16      baby_9b_dense_anneal100b_dominant3  964800  0.983577
+17      baby_9b_dense_anneal100b_dominant3  965232  1.042457
+18  baby_9b_dense_anneal100b_multilingual1  955200 -1.188578
+19  baby_9b_dense_anneal100b_multilingual1  957600 -0.530549
+20  baby_9b_dense_anneal100b_multilingual1  960000 -0.127788
+21  baby_9b_dense_anneal100b_multilingual1  962400  0.336230
+22  baby_9b_dense_anneal100b_multilingual1  964800  0.482793
+23  baby_9b_dense_anneal100b_multilingual1  965232  0.497095
+24  baby_9b_dense_anneal100b_multilingual2  955200 -1.032362
+25  baby_9b_dense_anneal100b_multilingual2  957600 -0.281727
+26  baby_9b_dense_anneal100b_multilingual2  960000 -0.087902
+27  baby_9b_dense_anneal100b_multilingual2  962400  0.321750
+28  baby_9b_dense_anneal100b_multilingual2  964800  0.534633
+29  baby_9b_dense_anneal100b_multilingual2  965232  0.517878
+30  baby_9b_dense_anneal100b_multilingual3  955200 -0.692322
+31  baby_9b_dense_anneal100b_multilingual3  957600 -0.109952
+32  baby_9b_dense_anneal100b_multilingual3  960000  0.098096
+33  baby_9b_dense_anneal100b_multilingual3  962400  0.436501
+34  baby_9b_dense_anneal100b_multilingual3  964800  0.392486
+35  baby_9b_dense_anneal100b_multilingual3  965232  0.362690
+36      baby_9b_dense_anneal100b_no-change  955200 -1.243789
+37      baby_9b_dense_anneal100b_no-change  957600 -0.686373
+38      baby_9b_dense_anneal100b_no-change  960000 -0.685826
+39      baby_9b_dense_anneal100b_no-change  962400 -0.228292
+40      baby_9b_dense_anneal100b_no-change  964800 -0.047060
+41      baby_9b_dense_anneal100b_no-change  965232 -0.111356
+42          baby_9b_dense_before-annealing  953312 -1.686939
+[info] wrote 13 plot(s) to prelude/groups1/100bt/multilingual
+  prelude/groups1/100bt/multilingual/arc_challenge_mt.png
+  prelude/groups1/100bt/multilingual/belebele.png
+  prelude/groups1/100bt/multilingual/global_mmlu_full.png
+  prelude/groups1/100bt/multilingual/global_piqa_completions.png
+  prelude/groups1/100bt/multilingual/global_piqa_prompted.png
+  prelude/groups1/100bt/multilingual/hellaswag.png
+  prelude/groups1/100bt/multilingual/include_base_44.png
+  prelude/groups1/100bt/multilingual/multiblimp.png
+  prelude/groups1/100bt/multilingual/opensubtitles_en_en→X_.png
+  prelude/groups1/100bt/multilingual/opensubtitles_x_X→en_.png
+  prelude/groups1/100bt/multilingual/xcsqa.png
+  prelude/groups1/100bt/multilingual/overview_grid.png
+  prelude/groups1/100bt/multilingual/macro_average_zscore.png
