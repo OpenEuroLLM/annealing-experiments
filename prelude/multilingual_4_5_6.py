@@ -9,8 +9,9 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List, Optional, Set, TextIO, Tuple
 
+
 SCRIPT_DIR = Path(__file__).resolve().parent
-DOMAINS = {"wiki", "web", "mt", "pdf", "parallel", "math", "code", "other"}
+DOMAINS = {"wiki", "web", "mt", "pdf", "parallel", "math", "code", "sft", "other"}
 LIMIT_DOMAINS = DOMAINS | {"all"}
 EPSILON = 1e-8
 
@@ -72,21 +73,18 @@ def classify_domain(dataset: str) -> str:
         return "pdf"
     if "finewiki" in name:
         return "wiki"
-    if name.startswith(("hplt-3.0", "hplt-4.0", "dclm-1.0", "hplt-4.0-bsc-edu", "fineweb2-hq", "finephrase-0.0.0",
-                        "nemotron-cc-1.0", "olmo-mix-1124")):
+    if name.startswith(("hplt-3.0", "hplt-4.0", "dclm-1.0", "hplt-4.0-bsc-edu", "fineweb2-hq", "finephrase-0.0.0", "nemotron-cc-1.0", "olmo-mix-1124")):
         return "web"
-    if name.startswith(
-            ("mixture-vitae", "nemotron-mind", "nemotron-pretraining-specialized", "openthoughts", "agenttrove",
-             "dolmino-mix-100b-1125")):
+    if name.startswith(("mixture-vitae", "nemotron-mind", "nemotron-pretraining-specialized", "openthoughts", "agenttrove", "dolmino-mix-100b-1125")):
         return "sft"
     return "other"
 
 
 def classify_language(
-        dataset: str,
-        part: str,
-        code_to_language: Dict[str, str],
-        domain: str,
+    dataset: str,
+    part: str,
+    code_to_language: Dict[str, str],
+    domain: str,
 ) -> Tuple[str, bool]:
     identity = f"{dataset}/{part}"
     for code in sorted(code_to_language, key=len, reverse=True):
@@ -99,23 +97,32 @@ def classify_language(
     return "eng_Latn", False
 
 
+def bsc_edu_shard_score(full_path: str) -> float:
+    shard_name = Path(full_path).name
+    match = re.fullmatch(r"shard_\d+_(\d{2})_text_document(?:\..*)?", shard_name)
+    if not match:
+        raise ValueError(f"Could not read BSC-EDU score from shard name: {shard_name}")
+    score_tenths = int(match.group(1))
+    if score_tenths > 50:
+        raise ValueError(f"BSC-EDU shard score must be between 0.0 and 5.0: {shard_name}")
+    return score_tenths / 10.0
+
+
 def read_inventory(
-        path: Path,
-        excluded: Set[str],
-        included: Set[str],
-        code_to_language: Dict[str, str],
-        bsc_edu_range: Optional[Tuple[float, float]] = None,
-        bsc_edu_partition: str = "both",
+    path: Path,
+    excluded: Set[str],
+    included: Set[str],
+    code_to_language: Dict[str, str],
+    bsc_edu_range: Optional[Tuple[float, float]] = None,
+    bsc_edu_partition: str = "both",
 ) -> List[Part]:
     required = {"collection", "dataset", "part", "full_path", "byte_size"}
     aggregated = defaultdict(int)  # type: Dict[Tuple[str, str, str, str], int]
-    scores = {}  # type: Dict[Tuple[str, str, str, str], float]
     with path.open(newline="", encoding="utf-8") as stream:
         reader = csv.DictReader(stream)
         missing = required - set(reader.fieldnames or [])
         if missing:
             raise ValueError(f"{path} is missing columns: {', '.join(sorted(missing))}")
-        has_score_column = "bsc_edu" in (reader.fieldnames or [])
         for row_number, row in enumerate(reader, start=2):
             collection = (row.get("collection") or "").strip()
             dataset = (row.get("dataset") or "").strip()
@@ -133,26 +140,17 @@ def read_inventory(
                 raise ValueError(f"Negative byte_size on CSV row {row_number}")
             key = (collection, dataset, part, full_path)
             aggregated[key] += byte_size
-            if has_score_column:
-                score_text = (row.get("bsc_edu") or "").strip()
-                if score_text:
-                    try:
-                        scores[key] = float(score_text)
-                    except ValueError as error:
-                        raise ValueError(f"Invalid bsc_edu score on CSV row {row_number}") from error
 
     parts = []
     for (collection, dataset, part, full_path), byte_size in sorted(aggregated.items()):
         domain = classify_domain(dataset)
         language, multilingual = classify_language(dataset, part, code_to_language, domain)
-        score = scores.get((collection, dataset, part, full_path))
+        score = bsc_edu_shard_score(full_path) if dataset == "hplt-4.0-bsc-edu" else None
         if dataset == "hplt-4.0-bsc-edu":
-            partition_name = part.split("/", 1)[0]
+            partition_name = part.split("/")[1]
             if bsc_edu_partition != "both" and partition_name != bsc_edu_partition:
                 continue
-            if bsc_edu_range is not None and (
-                    score is None or not (bsc_edu_range[0] <= score <= bsc_edu_range[1])
-            ):
+            if bsc_edu_range is not None and not (bsc_edu_range[0] <= score <= bsc_edu_range[1]):
                 continue
         parts.append(
             Part(
@@ -313,12 +311,12 @@ def rank_allocate(parts: List[Part], target: float, repeat: int) -> float:
 
 
 def allocate_matched(
-        parts: List[Part],
-        target: float,
-        repeat: int,
-        step: int,
-        is_fill: bool,
-        bsc_edu_range: Optional[Tuple[float, float]],
+    parts: List[Part],
+    target: float,
+    repeat: int,
+    step: int,
+    is_fill: bool,
+    bsc_edu_range: Optional[Tuple[float, float]],
 ) -> None:
     spread = fill_in_steps if is_fill else proportional_allocate
     extra = (step,) if is_fill else ()
@@ -342,13 +340,13 @@ def allocate_matched(
 
 
 def allocate_group(
-        parts: List[Part],
-        target: float,
-        limits: List[Rule],
-        fills: List[Rule],
-        repeat: int,
-        step: int,
-        bsc_edu_range: Optional[Tuple[float, float]] = None,
+    parts: List[Part],
+    target: float,
+    limits: List[Rule],
+    fills: List[Rule],
+    repeat: int,
+    step: int,
+    bsc_edu_range: Optional[Tuple[float, float]] = None,
 ) -> None:
     initial_consumed = sum(part.consumed for part in parts)
     group_limits = limits if limits else ([] if fills else [Rule("all", 1.0, repeat)])
@@ -381,15 +379,15 @@ def allocate_group(
 
 
 def allocate(
-        parts: List[Part],
-        horizon: int,
-        ratio: Tuple[float, float],
-        distribution: str,
-        limits: List[Rule],
-        fills: List[Rule],
-        repeat: int,
-        step: int,
-        bsc_edu_range: Optional[Tuple[float, float]] = None,
+    parts: List[Part],
+    horizon: int,
+    ratio: Tuple[float, float],
+    distribution: str,
+    limits: List[Rule],
+    fills: List[Rule],
+    repeat: int,
+    step: int,
+    bsc_edu_range: Optional[Tuple[float, float]] = None,
 ) -> float:
     dominant_target = horizon * ratio[0]
     multilingual_target = horizon * ratio[1]
@@ -431,13 +429,13 @@ def format_tokens(value: float) -> str:
 
 
 def write_output(
-        stream: TextIO,
-        parts: List[Part],
-        horizon: float,
-        args: argparse.Namespace,
-        ratio: Tuple[float, float],
-        limits: List[Rule],
-        fills: List[Rule],
+    stream: TextIO,
+    parts: List[Part],
+    horizon: float,
+    args: argparse.Namespace,
+    ratio: Tuple[float, float],
+    limits: List[Rule],
+    fills: List[Rule],
 ) -> None:
     allocated = sum(part.consumed for part in parts)
     stream.write("# generated weighted file list\n")
@@ -488,6 +486,17 @@ def write_output(
     )
 
     if args.debug:
+        printed_datasets = {
+            dataset
+            for (_, dataset), (available, consumed) in dataset_totals.items()
+            if consumed > EPSILON and available > 0
+        }
+        missing_datasets = sorted(set(args.include) - printed_datasets)
+        stream.write(
+            "# debug: included datasets absent from weight-file pairs: {}\n".format(
+                ", ".join(missing_datasets) or "none"
+            )
+        )
         available_languages = defaultdict(float)  # type: Dict[str, float]
         used_languages = defaultdict(float)  # type: Dict[str, float]
         available_domains = defaultdict(float)  # type: Dict[str, float]
@@ -513,7 +522,7 @@ def write_output(
                 f"{format_tokens(used)} ({pct:.2f}%)\n"
             )
         stream.write("# domain_tokens_available / allocated:\n")
-        for domain in ("wiki", "web", "mt", "pdf", "parallel", "math", "code"):
+        for domain in ("wiki", "web", "mt", "pdf", "parallel", "math", "code", "sft"):
             used = used_domains[domain]
             pct = used / allocated * 100 if allocated else 0.0
             stream.write(
@@ -525,7 +534,7 @@ def write_output(
         if part.consumed <= EPSILON:
             continue
         weight = part.consumed / horizon * args.scale
-        line = f"{weight:.6f} {part.path}"
+        line = f"{weight:.10f} {part.path}"
         if args.debug:
             percentage = 100 * part.consumed / part.tokens if part.tokens else 0.0
             line += (
@@ -565,7 +574,7 @@ def build_parser() -> argparse.ArgumentParser:
         metavar="DOMAIN[:REPEAT]",
         help="domain(s) eligible to fill remaining quota in --step increments; repeatable",
     )
-    parser.add_argument("--step", type=lambda _: int(float(_)), default=int(1e6), help="fill increment in tokens")
+    parser.add_argument("--step", type = lambda _: int(float(_)), default=int(1e6), help="fill increment in tokens")
     parser.add_argument("--repeat", type=int, default=2, help="maximum source passes by default")
     parser.add_argument("--ratio", default="60:40", help="dominant:multilingual, e.g. 60:40")
     parser.add_argument(
@@ -588,8 +597,10 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         metavar="MIN-MAX",
         help=(
-            "only use hplt-4.0-bsc-edu shards whose bsc_edu score falls in MIN-MAX "
-            "(e.g. 1.4-4.0), sampled top-down; omit to sample them like any other dataset"
+            "only use hplt-4.0-bsc-edu shards whose score, parsed from "
+            "shard_<index>_<score-tenths>_text_document names, falls in MIN-MAX "
+            "(e.g. 1.4-4.0); sample matching shards top-down. Omit to sample them "
+            "like any other dataset"
         ),
     )
     parser.add_argument(
