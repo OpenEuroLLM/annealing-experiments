@@ -1,0 +1,9 @@
+model_name,task,n_shot,metric_name,performance,source_file
+/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal300b_multilingual1_dominant2/checkpoints/iter_0989075,gsm8k,4,exact_match,0.7680060652009097,/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-10-14-00-23-30/results.csv
+/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal300b_multilingual1_dominant1/checkpoints/iter_0989075,gsm8k,4,exact_match,0.730098559514784,/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-10-14-00-23-30/results.csv
+/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal300b_no-change/checkpoints/iter_0955200,gsm8k,4,exact_match,0.335860500379075,/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-10-14-13-43-06/results.csv
+/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal300b_no-change/checkpoints/iter_0989075,gsm8k,4,exact_match,0.470811220621683,/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-10-14-13-43-06/results.csv
+/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal300b_no-change/checkpoints/iter_0989075,mbpp,3,pass_at_1,0.352,/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-10-19-12-36-14/results.csv
+/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal300b_no-change/checkpoints/iter_0955200,mbpp,3,pass_at_1,0.25,/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-10-19-12-36-14/results.csv
+/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal300b_multilingual1_dominant1/checkpoints/iter_0989075,mbpp,3,pass_at_1,0.48,/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-10-19-12-36-34/results.csv
+/scratch/project_465002891/prelude-mid/hf_models/baby_9b_dense_anneal300b_multilingual1_dominant2/checkpoints/iter_0989075,mbpp,3,pass_at_1,0.528,/scratch/project_465002891/prelude-mid/evals/ankutuzo/2026-10-19-12-36-34/results.csv

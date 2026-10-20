@@ -1,0 +1,5 @@
+run,step,score
+baby_9b_dense_anneal300b_multilingual1_dominant1,989075,0.7832937570299872
+baby_9b_dense_anneal300b_multilingual1_dominant2,989075,1.1087896505219719
+baby_9b_dense_anneal300b_no-change,955200,-1.3675075258184382
+baby_9b_dense_anneal300b_no-change,989075,-0.5245758817335208

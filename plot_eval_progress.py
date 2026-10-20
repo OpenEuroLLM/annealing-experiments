@@ -692,6 +692,7 @@ FAMILIES: Dict[str, dict] = {
         "template": "gsm8k",
         "langs": [None],
         "n_shot": 4,
+        "metric": "exact_match"
     },
     "reasoning_ifeval": {
         "template": "ifeval",
@@ -702,6 +703,7 @@ FAMILIES: Dict[str, dict] = {
         "template": "mbpp",
         "langs": [None],
         "n_shot": 3,
+        "metric": "pass_at_1"
     },
     "reasoning_GPQADiamond": {
         "template": "GPQADiamond",
