@@ -59,6 +59,35 @@ def read_language_codes(path: Path) -> Dict[str, str]:
     return code_to_language
 
 
+def resolve_excluded_languages(languages: List[str], path: Path) -> Set[str]:
+    aliases = {}  # type: Dict[str, str]
+    with path.open(encoding="utf-8") as stream:
+        for line in stream:
+            line = line.partition("#")[0].strip()
+            if not line:
+                continue
+            fields = line.split(":", 2)
+            if len(fields) != 3:
+                raise ValueError(f"Invalid language entry in {path}: {line}")
+            language_id, language_name, language_codes = (field.strip() for field in fields)
+            codes = language_codes.split()
+            canonical = "eng_Latn" if "eng_Latn" in codes else language_id
+            for alias in (language_id, language_name, *codes):
+                aliases[alias.casefold()] = canonical
+
+    resolved = set()
+    unknown = []
+    for language in languages:
+        canonical = aliases.get(language.casefold())
+        if canonical is None:
+            unknown.append(language)
+        else:
+            resolved.add(canonical)
+    if unknown:
+        raise ValueError(f"Unknown language(s) in --exclude-languages: {', '.join(unknown)}")
+    return resolved
+
+
 def classify_domain(dataset: str) -> str:
     name = dataset.lower()
     if "code" in name or "stack" in name:
@@ -115,6 +144,7 @@ def read_inventory(
     code_to_language: Dict[str, str],
     bsc_edu_range: Optional[Tuple[float, float]] = None,
     bsc_edu_partition: str = "both",
+    excluded_languages: Optional[Set[str]] = None,
 ) -> List[Part]:
     required = {"collection", "dataset", "part", "full_path", "byte_size"}
     aggregated = defaultdict(int)  # type: Dict[Tuple[str, str, str, str], int]
@@ -145,6 +175,8 @@ def read_inventory(
     for (collection, dataset, part, full_path), byte_size in sorted(aggregated.items()):
         domain = classify_domain(dataset)
         language, multilingual = classify_language(dataset, part, code_to_language, domain)
+        if excluded_languages and language in excluded_languages:
+            continue
         score = bsc_edu_shard_score(full_path) if dataset == "hplt-4.0-bsc-edu" else None
         if dataset == "hplt-4.0-bsc-edu":
             partition_name = part.split("/")[1]
@@ -166,7 +198,7 @@ def read_inventory(
             )
         )
     if not parts:
-        raise ValueError("No inventory parts remain after applying --exclude")
+        raise ValueError("No inventory parts remain after applying filters")
     return parts
 
 
@@ -592,6 +624,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--exclude", nargs="+", default=[], metavar="DATASET")
     parser.add_argument(
+        "--exclude-languages",
+        nargs="+",
+        default=[],
+        metavar="LANGUAGE",
+        help="exclude these languages by name or language code",
+    )
+    parser.add_argument(
         "--bsc-edu-range",
         type=parse_score_range,
         default=None,
@@ -621,6 +660,9 @@ def main() -> int:
     try:
         ratio = parse_ratio(args.ratio)
         code_to_language = read_language_codes(args.languages)
+        excluded_languages = resolve_excluded_languages(
+            args.exclude_languages, args.languages
+        )
         parts = read_inventory(
             args.inventory,
             set(args.exclude),
@@ -628,6 +670,7 @@ def main() -> int:
             code_to_language,
             args.bsc_edu_range,
             args.bsc_edu_partition,
+            excluded_languages,
         )
         limits = [parse_limit(value, args.repeat) for value in args.limit]
         fills = [parse_fill(value, args.repeat) for value in args.fill]
