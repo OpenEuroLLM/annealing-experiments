@@ -93,7 +93,7 @@ def main():
               else: pool[key].append(_);
         n += 1;
 
-  for key,value in pool.items():
+  for key, value in pool.items():
     #
     # prefer finepdfs-edu (among .pdf.), the clean partition of HPLT 4.0 (among .web.),
     # and dochplt (among parallel)
