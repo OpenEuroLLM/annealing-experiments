@@ -3,9 +3,9 @@
 # -*- coding: utf-8; -*-
 
 #
-# compute (equitable, multilingual) data mix ratios according to various constraints
+# distribute data mix ratios for HPLT 4.0 according to decreasing BSC-edu scores
 #
-# ./multilingual4.py --horizon 3e12 multilingual1.txt > multilingual4.txt
+# ./bsc-edu.py --horizon 3e12 multilingual1.txt > multilingual4.txt
 #
 import argparse;
 from functools import cmp_to_key;
