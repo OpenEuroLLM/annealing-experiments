@@ -67,7 +67,6 @@ def main():
   # sort lexicographically on dataset (and part) names
   #
   for entry in sorted(mix.values(), key = itemgetter("dataset", "part")):
-    print(entry, file = sys.stderr)
     dataset = entry["dataset"]; part = entry["part"];
     ratio = entry["ratio"];
     shards = dict();
