@@ -22,6 +22,9 @@ for i in 20 50 100 300; do
     singularity exec --bind /pfs/lustrep4/scratch/project_465002891:/scratch/project_465002891,/scratch/project_465002530 \
       /scratch/project_465002530/containers/laif-rocm-6.4.4-pytorch-2.9.1-te-2.4.0-fa-2.8.0-triton-3.2.0.sif \
       python plot_eval_progress.py \
+        --input prelude/evals/dclm-core-22/0bt \
+	--input prelude/evals/oellm-multilingual-eu/0bt \
+	--input prelude/evals/reasoning/0bt
         --input prelude/evals/dclm-core-22/${i}bt \
 	--input prelude/evals/oellm-multilingual-eu/${i}bt \
 	--input prelude/evals/reasoning/${i}bt \
