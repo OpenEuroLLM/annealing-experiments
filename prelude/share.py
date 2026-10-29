@@ -62,12 +62,14 @@ def main():
           dataset = re.sub(r"/megatron-lm.*", "", path);
           part = re.sub(r".+/megatron-lm/?", "", path);
           mix[path] = {"dataset": dataset, "part": part, "ratio": ratio};
-  print(mix)
+
   #
   # sort lexicographically on dataset (and part) names
   #
   for entry in sorted(mix.values(), key = itemgetter("dataset", "part")):
     dataset = entry["dataset"]; part = entry["part"];
+    if part != "": path = dataset + "/megatron-lm/" + part;
+    else: path = dataset + "/megatron-lm";
     ratio = entry["ratio"];
     shards = dict();
     for shard in sorted(glob.glob(os.path.join(arguments.root,
@@ -78,8 +80,8 @@ def main():
     n = sum(shards.values());
     for shard, i in shards.items():
       tail = os.path.split(shard)[1][:-len(".info.json")];
-      print("{:,.10f} {}/megatron-lm/{}/{}_text_document"
-            "".format(ratio / n * i, dataset, part, tail));
+      print("{:,.10f} {}/{}_text_document"
+            "".format(ratio / n * i, path, tail));
 
 if __name__ == "__main__":
   main();
