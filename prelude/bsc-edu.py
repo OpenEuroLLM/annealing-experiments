@@ -26,6 +26,7 @@ def main():
   parser = argparse.ArgumentParser(description = "Optimize BSC-edu Scores for HPLT 4.0");
   parser.add_argument("--root", type=str, default="/scratch/project_465002530/training/collection");
   parser.add_argument("--horizon", type = lambda _: int(float(_)), default = 3e12);
+  parser.add_argument("--calibrate", type = lambda _: float(_), default = 1);
   parser.add_argument("--quiet", action = "store_true", default = False);
   parser.add_argument("inputs", nargs = "+");
   arguments = parser.parse_args();
@@ -45,7 +46,7 @@ def main():
                 file = sys.stderr, flush = True);
         continue;
       ratio, path = _.groups();
-      ratio = float(ratio);
+      ratio = float(ratio) * arguments.calibrate;
       if ratio == 0:
         if not arguments.quiet:
           print("multilingual4.py(): ignoring null line #{}: {}."
