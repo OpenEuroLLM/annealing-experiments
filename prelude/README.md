@@ -9,6 +9,30 @@ cat ../../training/collection/baby/datamix.txt \
 | while read line; do if grep "$line" multilingual0.txt > /dev/null; then :; else echo $line; fi; done > dominant0.txt
 ```
 
+## Multilingual1: Slight Tilt towards Higher Quality
+
+
+## Multilingual2: Equity among Language Large and Small
+
+```
+./multilingual2.py --horizon 2e12 --scale 0.18 --limit web:0.5 --limit mt:0.3 --limit pdf:0.15 --limit parallel:0.05 --fill web --fill pdf flag.csv > multilingual2.txt
+```
+
+## Multilingual3: Less English, 40% Multilingual
+
+```
+awk '/^[0-9.]+ / {printf("%.6f %s\n", $1 * 0.75, $2); }' dominant0.txt > multilingual3.txt
+awk '/^[0-9.]+ / {printf("%.6f %s\n", $1 * 2.27, $2); }' multilingual1.txt >> multilingual3.txt
+```
+
+## Multilingual4: Refill Multilingual1 According to BSC-edu
+
+```
+./share.py dominant0b.txt > dominant0bs.txt
+./bsc-edu.py --calibrate $(echo .2/0.176173 | bc -l) multilingual1.txt > multilingual4.txt
+./create_mixture_lumi.py --base /gpfs/projects/ehpc533/training-data-collection/ --inputs dominant0bs.txt multilingual4.txt > datamix_mn5_multilingual4_dominant0.txt
+```
+
 ## Higher-Quality Multilingual Data
 
 ```
@@ -19,18 +43,6 @@ python3 multilingual_4_5_6.py --inventory inventory.csv --languages languages.tx
 python3 multilingual_4_5_6.py --inventory inventory.csv --languages languages.txt --horizon 3e12 --scale 0.2 --ratio 0:100 --limit web:0.6766 --limit pdf:0.2804 --limit wiki:0.006 --limit parallel:0.037 --limit mt:0.0--fill web --fill pdf --step 1e6 --repeat 2 --distribution "hegemonic" --bsc-edu-range 1.0-4.0 --bsc-edu-partition "both" --include hplt-4.0-bsc-edu finepdfs-edu-1.0.0 dochplt-3.1 finewiki-0.0.0 fineopus-filtered-0.4 --output multilingual6.txt
 ```
 
-## Multilingual Equity
-
-```
-./multilingual2.py --horizon 2e12 --scale 0.18 --limit web:0.5 --limit mt:0.3 --limit pdf:0.15 --limit parallel:0.05 --fill web --fill pdf flag.csv > multilingual2.txt
-```
-
-## Less English: 40% Multilingual
-
-```
-awk '/^[0-9.]+ / {printf("%.6f %s\n", $1 * 0.75, $2); }' dominant0.txt > multilingual3.txt
-awk '/^[0-9.]+ / {printf("%.6f %s\n", $1 * 2.27, $2); }' multilingual1.txt >> multilingual3.txt
-```
 
 ## Dominant Mixes
 
