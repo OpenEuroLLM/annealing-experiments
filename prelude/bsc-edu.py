@@ -92,7 +92,7 @@ def main():
           n = json.load(_)["idx"]["total_tokens"];
           tail = os.path.split(shard)[1][:-len(".info.json")];
           _ = min(ratio, entry["ratio"] * n / budget);
-          shards["{}/megatron-lm/openeurollm-256k/{}/{}_text_document"
+          shards["{}/megatron-lm/openeurollm-256k/{}/{}"
                  "".format(dataset, part, tail)] = _;
           ratio -= _;
 #          print(dataset, part, tail, entry["ratio"], budget, n, _, ratio,
