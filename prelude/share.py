@@ -30,7 +30,7 @@ def main():
   suffix = re.compile(r"/(:?shard)?[0-9_]+_text_document$");
   mix = dict();
   for file in arguments.inputs:
-    with open(file, encoding = "utf-8") as stream:
+    with sys.stdin if file == "-" else open(file, encoding = "utf-8") as stream:
       for i, line in enumerate(stream):
         line = line.strip();
         if line.startswith("#"): continue;

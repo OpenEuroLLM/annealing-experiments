@@ -9,6 +9,21 @@ cat ../../training/collection/baby/datamix.txt \
 | while read line; do if grep "$line" multilingual0.txt > /dev/null; then :; else echo $line; fi; done > dominant0.txt
 ```
 
+## Baselines Adapted for the BSC Environment
+
+```
+sed \
+  -e 's,baby/finepdfs,flag/finepdfs,g' \
+  -e 's,baby/nemotron-cc-opus,flag/nemotron-cc-opus,g' \
+  -e 's,baby/nemotron-cc-tower,flag/nemotron-cc-tower,g' \
+  multilingual0.txt | ./share.py > multilingual0bs.txt
+
+./create_mixture_lumi.py \
+  --base /gpfs/projects/ehpc533/training-data-collection/ \
+  --inputs dominant0bs.txt multilingual0bs.txt \
+  > datamix_mn5_multilingual0_dominant0.txt
+```
+
 ## Multilingual1: Slight Tilt towards Higher Quality
 
 
