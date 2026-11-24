@@ -9,6 +9,12 @@ cat ../../training/collection/baby/datamix.txt \
 | while read line; do if grep "$line" multilingual0.txt > /dev/null; then :; else echo $line; fi; done > dominant0.txt
 ```
 
+##
+General conventions:
+
++ suffix `b` for adaptation to the BSC environment> equivalent parts from the `baby` mix are replaced with corresponding dataset parts from the `flag` collection
++ suffix `s` for proportional re-sharing across available token shards, i.e. first summing all weights per dataset part, then distributing them according to available token counts
+
 ## Baselines Adapted for the BSC Environment
 
 ```
@@ -27,7 +33,7 @@ sed \
 ## Multilingual1: Slight Tilt towards Higher Quality
 
 
-## Multilingual2: Equity among Language Large and Small
+## Multilingual2: Equity among Languages Large and Small
 
 ```
 ./multilingual2.py --horizon 2e12 --scale 0.18 --limit web:0.5 --limit mt:0.3 --limit pdf:0.15 --limit parallel:0.05 --fill web --fill pdf flag.csv > multilingual2.txt
@@ -47,6 +53,15 @@ awk '/^[0-9.]+ / {printf("%.6f %s\n", $1 * 2.27, $2); }' multilingual1.txt >> mu
 ./bsc-edu.py --calibrate $(echo .2/0.176173 | bc -l) multilingual1.txt > multilingual4.txt
 ./create_mixture_lumi.py --base /gpfs/projects/ehpc533/training-data-collection/ --inputs dominant0bs.txt multilingual4.txt > datamix_mn5_multilingual4_dominant0.txt
 ```
+
+## Multilingual5: Increase Multilingual Component to 30 Percent
+
+```
+awk '/^[0-9.]+ / {printf("%.6f %s\n", $1 * 70 / 80, $2); }' dominant0bs.txt > dominant0bs.70.txt
+./bsc-edu.py --calibrate $(echo .3/0.176173 | bc -l) multilingual1.txt > multilingual5.txt
+./create_mixture_lumi.py --base /gpfs/projects/ehpc533/training-data-collection/ --inputs dominant0bs.70.txt multilingual5.txt > datamix_mn5_multilingual5_dominant0.txt
+```
+
 
 ## Higher-Quality Multilingual Data
 
