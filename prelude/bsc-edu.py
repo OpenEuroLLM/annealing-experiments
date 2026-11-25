@@ -98,7 +98,10 @@ def main():
 #        print(dataset, part, tail, entry["ratio"], budget, n, _, ratio,
 #              file = sys.stderr);
         if ratio <= 0: break;
-      if ratio > 0: n = entry["ratio"] / (entry["ratio"] - ratio);
+      if ratio > 0:
+        n = entry["ratio"] / (entry["ratio"] - ratio);
+        print("bsc-edu.py: {:.2f} repetitions for {}/{}"
+              "".format(n, dataset, part), file = sys.stderr);
       else: n = 1;
       for path, ratio in shards.items():
         print("{:,.10f} {}_text_document".format(ratio * n, path));
