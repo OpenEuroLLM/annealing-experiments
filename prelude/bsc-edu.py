@@ -32,7 +32,7 @@ def main():
   arguments = parser.parse_args();
 
   pattern = re.compile(r"(0\.[0-9]+)[ \t](.+)$")
-  suffix = re.compile(r"/(:?shard)?[0-9_]+_text_document$");
+  suffix = re.compile(r"/(:?shard|merge)?[0-9_]+_text_document$");
   mix = dict();
   with open(arguments.inputs[0], encoding = "utf-8") as stream:
     for i, line in enumerate(stream):
@@ -41,7 +41,7 @@ def main():
       _ = pattern.match(line)
       if _ is None:
         if not arguments.quiet:
-          print("multilingual4.py(): ignoring invalid line #{}: {}."
+          print("bsc-edu.py(): ignoring invalid line #{}: {}."
                 "".format(i, line),
                 file = sys.stderr, flush = True);
         continue;
@@ -49,7 +49,7 @@ def main():
       ratio = float(ratio) * arguments.calibrate;
       if ratio == 0:
         if not arguments.quiet:
-          print("multilingual4.py(): ignoring null line #{}: {}."
+          print("bsc-edu.py(): ignoring null line #{}: {}."
                 "".format(i, line),
                 file = sys.stderr, flush = True);
         continue;
@@ -82,22 +82,22 @@ def main():
     #
     if "hplt-4.0" in dataset and not "srp_Latn" in part:
       dataset += "-bsc-edu";
+      part = part.replace("clean", "cleanm");
       budget = round(ratio * arguments.horizon);
       shards = dict();
       _ = glob.glob(os.path.join(arguments.root,
                                  dataset, "megatron-lm/openeurollm-256k",
-                                 part, "*.info.json"));
+                                 part, "*_text_document.bin"));
       for shard in sorted(_, key = cmp_to_key(cmp), reverse = True):
-        with open(shard) as _:
-          n = json.load(_)["idx"]["total_tokens"];
-          tail = os.path.split(shard)[1][:-len(".info.json")];
-          _ = min(ratio, entry["ratio"] * n / budget);
-          shards["{}/megatron-lm/openeurollm-256k/{}/{}"
-                 "".format(dataset, part, tail)] = _;
-          ratio -= _;
-#          print(dataset, part, tail, entry["ratio"], budget, n, _, ratio,
-#                file = sys.stderr);
-          if ratio <= 0: break;
+        n = os.path.getsize(shard) // 4;
+        tail = os.path.split(shard)[1][:-len("_text_document.bin")];
+        _ = min(ratio, entry["ratio"] * n / budget);
+        shards["{}/megatron-lm/openeurollm-256k/{}/{}"
+               "".format(dataset, part, tail)] = _;
+        ratio -= _;
+#        print(dataset, part, tail, entry["ratio"], budget, n, _, ratio,
+#              file = sys.stderr);
+        if ratio <= 0: break;
       if ratio > 0: n = entry["ratio"] / (entry["ratio"] - ratio);
       else: n = 1;
       for path, ratio in shards.items():
